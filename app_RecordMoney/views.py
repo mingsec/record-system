@@ -69,30 +69,30 @@ def index(request):
         current_week = today.isocalendar()[1]
         current_day = today.day
       
-        if time_filter == '1' or time_filter == '0':
+        if time_filter == '1':
             record_moneys = RecordMoney.objects.filter(
                 trading_year=current_year,
                 trading_month=current_month,
                 trading_day=current_day
             ).order_by("-record_time")
-            time_filter_label = "最近一天的收支记录如下："
-        elif time_filter == '2' :
+            time_filter_label = "%s年%s月%s日的时间记录如下：" % (current_year, current_month, current_day)
+        elif time_filter == '2':
             record_moneys = RecordMoney.objects.filter(
                 trading_year=current_year,
                 trading_week=current_week,
             ).order_by("-record_time")
-            time_filter_label = "最近一周的收支记录如下："
-        elif time_filter == '3' :
+            time_filter_label = "%s年第%s周的时间记录如下：" % (current_year,current_week )
+        elif time_filter == '3':
             record_moneys = RecordMoney.objects.filter(
                 trading_year=current_year,
                 trading_month=current_month,
             ).order_by("-record_time")
-            time_filter_label = "最近一月的收支记录如下："
-        elif time_filter == '4' :
+            time_filter_label = "%s年%s月的时间记录如下：" % (current_year, current_month)
+        elif time_filter == '4':
             record_moneys = RecordMoney.objects.filter(
                 trading_year=current_year,
             ).order_by("-record_time")
-            time_filter_label = "最近一年的收支记录如下："
+            time_filter_label = "%s年的时间记录如下：" % (current_year)
 
     context = {'record_moneys':record_moneys, 'time_filter_label':time_filter_label}
 

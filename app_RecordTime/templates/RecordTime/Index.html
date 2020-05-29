@@ -7,18 +7,15 @@
 
     <div class="container-fluid">   
         <form action="#" method="GET" role="form" style="font-size:14px" >
-            <div class=" row">
-                <div class="col-sm-11 text-center">
-                    <select class="form-control" id="time_filter" name="time_filter">
-                        <option value='0'>---请选择时间范围---</option>
-                        <option value='1'>最近一天的数据</option>
-                        <option value='2'>最近一周的数据</option>
-                        <option value='3'>最近一月的数据</option>
-                        <option value='4'>最近一年的数据</option>
-                    </select>
-                </div>
-
-                <div class="col-md-1  text-center">
+            <div class="input-group">
+                <select class="form-control text-center" id="time_filter" name="time_filter">
+                    <option value=''>---请选择时间范围---</option>
+                    <option value='1'>今日数据</option>
+                    <option value='2'>本周数据</option>
+                    <option value='3'>本月数据</option> 
+                    <option value='4'>本年数据</option>
+                </select>
+                <div class="input-group-append text-center">
                     <button type="submit" class="btn btn-success">查询</button>
                 </div>
             </div>
@@ -33,10 +30,12 @@
         <table class="table table-hover text-center" style="font-size:14px">
             <thead class="thead-light" > 
                 <tr>
+                    <!--
                     <th>年</th>
                     <th>月</th>
                     <th>日</th>
                     <th>周</th>
+                    -->
                     <th>活动类型</th>
                     <th>具体活动</th>
                     <th>所属项目</th>
@@ -48,10 +47,12 @@
             <tbody>
                 {% for rs in record_times %}
                     <tr>
+                        <!--
                         <td>{{ rs.event_year }}</td>
                         <td>{{ rs.event_month }}</td>
                         <td>{{ rs.event_day }}</td>
                         <td>{{ rs.event_week }}</td>
+                        -->
                         <td>{{ rs.event_type }}</td>
                         <td>{{ rs.event }}</td>
                         <td>{{ rs.project }}</td>

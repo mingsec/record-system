@@ -6,19 +6,16 @@
     <a>&nbsp</a>  <!--占位符，空行-->
 
     <div class="container-fluid">   
-        <form action="{% url 'nsp_RecordMoney:RecordMoney' %}" method="GET" role="form" style="font-size:14px" >
-            <div class=" row">
-                <div class="col-sm-11 text-center">
-                    <select class="form-control" id="time_filter" name="time_filter">
-                        <option value='0'>---请选择时间范围---</option>
-                        <option value='1'>最近一天的数据</option>
-                        <option value='2'>最近一周的数据</option>
-                        <option value='3'>最近一月的数据</option>
-                        <option value='4'>最近一年的数据</option>
-                    </select>
-                </div>
-
-                <div class="col-md-1  text-center">
+        <form action="#" method="GET" role="form" style="font-size:14px" >
+            <div class="input-group">
+                <select class="form-control text-center" id="time_filter" name="time_filter">
+                    <option value=''>---请选择时间范围---</option>
+                    <option value='1'>今天数据</option>
+                    <option value='2'>本周数据</option>
+                    <option value='3'>本月数据</option>
+                    <option value='4'>本年数据</option>
+                </select>
+                <div class="input-group-append  text-center">
                     <button type="submit" class="btn btn-success">查询</button>
                 </div>
             </div>
@@ -33,10 +30,12 @@
         <table class="table table-hover text-center" style="font-size:14px">
             <thead class="thead-light" > 
                 <tr>
+                    <!--
                     <th>年</th>
                     <th>月</th>
                     <th>日</th>
                     <th>周</th>
+                    -->
                     <th>所属期间</th>
                     <th>收支类型</th>
                     <th>一级科目</th>
@@ -51,10 +50,12 @@
             <tbody>
                 {% for rm in record_moneys %}
                     <tr>
+                        <!--
                         <td>{{ rm.trading_year }}</td>
                         <td>{{ rm.trading_month }}</td>
                         <td>{{ rm.trading_day }}</td>
                         <td>{{ rm.trading_week }}</td>
+                        -->
                         <td>{{ rm.trading_period }}</td>
                         <td>{{ rm.trading_type }}</td>
                         <td>{{ rm.trading_first_level_account }}</td>
