@@ -1,0 +1,27 @@
+<!--
+ * @Author: Zefeng Zhu
+ * @Date: 2020-05-21 14:09:47
+ * @LastEditTime: 2020-05-26 15:57:26
+ * @LastEditors: Zefeng Zhu
+ * @Description: 
+ * @FilePath: \pro_rs\app_HomePage\templates\homepage\homepage.html
+ * @ Mingsec Industry (C)Copyright 2009-2020
+--> 
+{% extends "homepage/base.html" %}
+{% load bootstrap4 %}
+
+{% block content%}
+    <div class="container-fluid">
+        <p>&nbsp</p>
+    
+        <div class="jumbotron bg-info" onclick="window.open('/RecordTime/NewRecord','_self')">
+            <h3 class="text-center"><strong class="text-white">记录时间</strong></h3>
+            <h4 class="text-center"><small class="text-dark">&nbsp &nbsp --无论你在做什么，记下来。</small></h4>
+        </div>
+    
+        <div class="jumbotron bg-info" onclick="window.open('/RecordMoney/NewRecord','_self')">
+            <h3 class="text-center"><strong class="text-white">记录收支</strong></h3>
+            <h4 class="text-center"><small class="text-dark">&nbsp &nbsp --无论你花费了多少，记下来。</small></h4>
+        </div>
+    </div>
+{% endblock content%}

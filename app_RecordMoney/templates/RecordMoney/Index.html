@@ -1,0 +1,71 @@
+{% extends "RecordMoney/base.html" %}
+{% load bootstrap4 %}
+
+
+{% block content%}
+    <a>&nbsp</a>  <!--占位符，空行-->
+
+    <div class="container-fluid">   
+        <form action="{% url 'nsp_RecordMoney:RecordMoney' %}" method="GET" role="form" style="font-size:14px" >
+            <div class=" row">
+                <div class="col-sm-11 text-center">
+                    <select class="form-control" id="time_filter" name="time_filter">
+                        <option value='0'>---请选择时间范围---</option>
+                        <option value='1'>最近一天的数据</option>
+                        <option value='2'>最近一周的数据</option>
+                        <option value='3'>最近一月的数据</option>
+                        <option value='4'>最近一年的数据</option>
+                    </select>
+                </div>
+
+                <div class="col-md-1  text-center">
+                    <button type="submit" class="btn btn-success">查询</button>
+                </div>
+            </div>
+        </form>
+
+        <h6>&nbsp</h6>  <!--占位符，空行-->
+
+        <p class="text-info" style="font-size:20px"><strong>{{ time_filter_label }}</strong></p>
+    </div>
+    
+    <div class="container-fluid" >
+        <table class="table table-hover text-center" style="font-size:14px">
+            <thead class="thead-light" > 
+                <tr>
+                    <th>年</th>
+                    <th>月</th>
+                    <th>日</th>
+                    <th>周</th>
+                    <th>所属期间</th>
+                    <th>收支类型</th>
+                    <th>一级科目</th>
+                    <th>明细科目</th>
+                    <th>交易商家</th>
+                    <th>摘要</th>
+                    <th>金额(元)</th>
+                    <th>账户</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for rm in record_moneys %}
+                    <tr>
+                        <td>{{ rm.trading_year }}</td>
+                        <td>{{ rm.trading_month }}</td>
+                        <td>{{ rm.trading_day }}</td>
+                        <td>{{ rm.trading_week }}</td>
+                        <td>{{ rm.trading_period }}</td>
+                        <td>{{ rm.trading_type }}</td>
+                        <td>{{ rm.trading_first_level_account }}</td>
+                        <td>{{ rm.trading_detail_account }}</td>
+                        <td>{{ rm.trader }}</td>
+                        <td class="text-left">{{ rm.summary}} </td>
+                        <td class="text-right">{{ rm.amount }}</td>
+                        <td>{{ rm.trading_account }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

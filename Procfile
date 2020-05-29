@@ -1,0 +1,1 @@
+web: gunicorn pro_RecordSystem.wsgi --log-file -

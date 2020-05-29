@@ -1,0 +1,78 @@
+{% extends "RecordMoney/base.html" %}
+{% load bootstrap4 %}
+
+
+{% block content%}
+    <a>&nbsp</a>  <!--占位符，空行-->
+
+    <div class="container-fluid">
+        <p class="text-info" style="font-size:20px"><strong>增加一条收支记录:</strong></p>
+    </div>
+
+    
+    <form action="" method="POST" style="font-size:14px">
+        <div class="container-fluid">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+
+            <div class="row">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-success"><b>保存</b></button>
+                </div>
+
+                <div class="col text-center">
+                    <button type="reset" class="btn btn-danger"><b>重置</b></button>
+                </div>
+
+                <div class="col text-center">
+                    <a href="{% url 'nsp_RecordMoney:RecordMoney' %}">
+                        <button type="button" class="btn btn-secondary"><b>取消</b></button>
+                    </a>
+                </div>
+            </div>
+        </div>        
+    </form>     
+    
+    <script>
+        // 获取收支大类的选项
+        $.get('/RecordMoney/Ajax/LoadIncomeAndExpenditureType/',function(data){
+            for(var i=0, len=data.income_and_expenditure_types.length; i<len ;i++){
+                $new = $("<option value="+data.income_and_expenditure_types[i][0]+">"+data.income_and_expenditure_types[i][1]+"</option>");
+                $("#id_trading_type").append( $new );
+            }
+        });
+
+        // 收支大类选项改变以后
+        $("#id_trading_type").change(function(){    
+            // 清空一级科目、二级科目的数据
+            $("#id_trading_first_level_account").empty().append('<option value="">---请选择---</option>');
+            $("#id_trading_detail_account").empty().append('<option value="">---请选择---</option>');
+            $.ajax({
+                url: '/RecordMoney/Ajax/LoadFirstLevelAccounts/',
+                type: 'GET',
+                data: {'trading_type_id': $(this).val()}
+            }).done(function(data){
+                for(var i = 0,len = data.first_level_accounts.length; i<len ;i++){
+                    $new = $("<option value="+data.first_level_accounts[i][0]+">"+data.first_level_accounts[i][1]+"</option>");
+                    $("#id_trading_first_level_account").append( $new );
+                }
+            });
+        });
+
+        // 一级科目选项改变以后
+        $("#id_trading_first_level_account").change(function(){    
+            // 清空二级科目的数据
+            $("#id_trading_detail_account").empty().append('<option value="">---请选择---</option>');
+            $.ajax({
+                url: '/RecordMoney/Ajax/LoadDetailAccounts/',
+                type: 'GET',
+                data: {'trading_first_level_accounts_id': $(this).val()}
+            }).done(function(data){
+                for(var i = 0,len = data.detail_accounts.length; i<len ;i++){
+                    $new = $("<option value="+data.detail_accounts[i][0]+">"+data.detail_accounts[i][1]+"</option>");
+                    $("#id_trading_detail_account").append( $new );
+                }
+            });
+        });
+    </script>
+{% endblock content%}
