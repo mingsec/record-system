@@ -10,7 +10,7 @@
             <div class="input-group">
                 <select class="form-control text-center" id="time_filter" name="time_filter">
                     <option value=''>---请选择时间范围---</option>
-                    <option value='1'>今天数据</option>
+                    <option value='1'>今日数据</option>
                     <option value='2'>本周数据</option>
                     <option value='3'>本月数据</option>
                     <option value='4'>本年数据</option>
@@ -64,6 +64,15 @@
                         <td class="text-left">{{ rm.summary}} </td>
                         <td class="text-right">{{ rm.amount }}</td>
                         <td>{{ rm.trading_account }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td class="text-left" colspan="8">
+                            <!--第一个单元格与第二个单元格合并，
+                                colspan="8"意思是第一个单元格的长度改变成5个单元格的长度，
+                                也就是把第一个单元格长度边长五倍，第二个单元格的<td></td>删除。-->
+                            尚未添加任何记录。
+                        </td> 
                     </tr>
                 {% endfor %}
             </tbody>

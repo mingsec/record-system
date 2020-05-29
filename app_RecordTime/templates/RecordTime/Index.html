@@ -55,10 +55,25 @@
                         -->
                         <td>{{ rs.event_type }}</td>
                         <td>{{ rs.event }}</td>
-                        <td>{{ rs.project }}</td>
+                        <td>
+                            {% if rs.project %}
+                                {{ rs.project }}
+                            {% else %}
+                                --
+                            {% endif %}
+                        </td>
                         <td class="text-left">{{ rs.event_description }}</td>
                         <td>{{ rs.time_duration}} </td>
                         <td>{{ rs.record_time }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td class="text-left" colspan="8">
+                            <!--第一个单元格与第二个单元格合并，
+                                colspan="8"意思是第一个单元格的长度改变成5个单元格的长度，
+                                也就是把第一个单元格长度边长五倍，第二个单元格的<td></td>删除。-->
+                            尚未添加任何记录。
+                        </td> 
                     </tr>
                 {% endfor %}
             </tbody>

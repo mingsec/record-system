@@ -41,7 +41,8 @@ class NewRecordTimeForm(forms.Form):
     project = forms.ModelChoiceField(
         label = '请选择活动所属的项目：', 
         queryset=Project.objects.all(), 
-        empty_label="---请选择---"
+        empty_label="---请选择---",
+        required=False,
     )
 
  
