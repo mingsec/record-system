@@ -154,7 +154,6 @@ STATIC_URL = '/static/'
 '''
 
 # 部署至Heroku的设置
-'''
 if os.getcwd() == '/app':
     import dj_database_url
 
@@ -174,4 +173,3 @@ if os.getcwd() == '/app':
     STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
     )
-'''
