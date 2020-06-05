@@ -44,7 +44,7 @@ class NewRecordMoneyForm(forms.Form):
     )
     summary = forms.CharField(
         label = '摘要', 
-        widget = forms.Textarea(attrs={'rows':'3', 'placeholder':"请对交易事项做简要描述"}),
+        widget = forms.Textarea(attrs={'rows':'2', 'placeholder':"请对交易事项做简要描述"}),
         max_length = 255
     )
     amount = forms.FloatField(

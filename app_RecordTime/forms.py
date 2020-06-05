@@ -35,7 +35,7 @@ class NewRecordTimeForm(forms.Form):
     )
     event_description = forms.CharField(
         label = '活动描述：', 
-        widget = forms.Textarea(attrs={'rows':'5', 'placeholder':"请对活动事项做简要描述"}),
+        widget = forms.Textarea(attrs={'rows':'2', 'placeholder':"请对活动事项做简要描述"}),
         max_length = 255
     )
     project = forms.ModelChoiceField(

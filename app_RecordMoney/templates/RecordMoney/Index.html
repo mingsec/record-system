@@ -30,13 +30,11 @@
         <table class="table table-hover text-center" style="font-size:14px">
             <thead class="thead-light" > 
                 <tr>
-                    <!--
-                    <th>年</th>
-                    <th>月</th>
-                    <th>日</th>
-                    <th>周</th>
-                    -->
-                    <th>所属期间</th>
+                    <!-- <th>年</th> -->
+                    <!-- <th>月</th> -->
+                    <!-- <th>日</th> -->
+                    <!-- <th>周</th> -->
+                    <!-- <th>所属期间</th> -->
                     <th>收支类型</th>
                     <th>一级科目</th>
                     <th>明细科目</th>
@@ -44,19 +42,18 @@
                     <th>摘要</th>
                     <th>金额(元)</th>
                     <th>账户</th>
+                    <!-- <th>记录时间</th> -->
                 </tr>
             </thead>
 
             <tbody>
                 {% for rm in record_moneys %}
                     <tr>
-                        <!--
-                        <td>{{ rm.trading_year }}</td>
-                        <td>{{ rm.trading_month }}</td>
-                        <td>{{ rm.trading_day }}</td>
-                        <td>{{ rm.trading_week }}</td>
-                        -->
-                        <td>{{ rm.trading_period }}</td>
+                        <!-- td>{{ rm.trading_year }}</td> -->
+                        <!-- <td>{{ rm.trading_month }}</td> -->
+                        <!-- <td>{{ rm.trading_day }}</td> -->
+                        <!-- <td>{{ rm.trading_week }}</td> -->
+                        <!-- <td>{{ rm.trading_period }}</td> -->
                         <td>{{ rm.trading_type }}</td>
                         <td>{{ rm.trading_first_level_account }}</td>
                         <td>{{ rm.trading_detail_account }}</td>
@@ -64,6 +61,7 @@
                         <td class="text-left">{{ rm.summary}} </td>
                         <td class="text-right">{{ rm.amount }}</td>
                         <td>{{ rm.trading_account }}</td>
+                        <!-- <td>{{ rm.record_time }}</td> -->
                     </tr>
                 {% empty %}
                     <tr>

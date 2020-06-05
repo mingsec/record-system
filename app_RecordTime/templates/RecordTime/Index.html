@@ -30,31 +30,33 @@
         <table class="table table-hover text-center" style="font-size:14px">
             <thead class="thead-light" > 
                 <tr>
-                    <!--
-                    <th>年</th>
-                    <th>月</th>
-                    <th>日</th>
-                    <th>周</th>
-                    -->
+                    <!-- <th>年</th> -->
+                    <!-- <th>月</th> -->
+                    <!-- <th>日</th> -->
+                    <!-- <th>周</th> -->
                     <th>活动类型</th>
-                    <th>具体活动</th>
-                    <th>所属项目</th>
+                    <th>具体活动</th>                   
                     <th>活动描述</th>
+                    <!-- <th>开始时间</th>  -->
+                    <th>结束时间</th>
                     <th>耗用时长(min)</th>
-                    <th>记录时间</th>
+                    <th>所属项目</th>
+                    <!-- <th>记录时间</th> -->
                 </tr>
             </thead>
             <tbody>
                 {% for rs in record_times %}
                     <tr>
-                        <!--
-                        <td>{{ rs.event_year }}</td>
-                        <td>{{ rs.event_month }}</td>
-                        <td>{{ rs.event_day }}</td>
-                        <td>{{ rs.event_week }}</td>
-                        -->
+                        <!-- <td>{{ rs.event_year }}</td> -->
+                        <!-- <td>{{ rs.event_month }}</td> -->
+                        <!-- <td>{{ rs.event_day }}</td> -->
+                        <!-- <td>{{ rs.event_week }}</td> -->
                         <td>{{ rs.event_type }}</td>
                         <td>{{ rs.event }}</td>
+                        <td class="text-left">{{ rs.event_description }}</td>
+                        <!-- <td>{{ rs.begin_time }}</td> -->
+                        <!-- <td>{{ rs.end_time }}</td> -->
+                        <td>{{ rs.time_duration}} </td>
                         <td>
                             {% if rs.project %}
                                 {{ rs.project }}
@@ -62,9 +64,7 @@
                                 --
                             {% endif %}
                         </td>
-                        <td class="text-left">{{ rs.event_description }}</td>
-                        <td>{{ rs.time_duration}} </td>
-                        <td>{{ rs.record_time }}</td>
+                        <!-- <td>{{ rs.record_time }}</td> -->
                     </tr>
                 {% empty %}
                     <tr>
