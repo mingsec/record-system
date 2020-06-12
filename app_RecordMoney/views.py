@@ -13,9 +13,11 @@
 # 在下方引入需要的库
 from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+#from django.core import serializers
+from sqlalchemy import create_engine
 import datetime
-from django.core import serializers
 import json
+import pandas
 
 from .models import IncomeAndExpenditureType, FirstLevelAccounts, DetailAccounts, Account, RecordMoney
 from .forms import NewRecordMoneyForm
@@ -98,8 +100,9 @@ def index(request):
 
     return render(request, 'RecordMoney/Index.html', context)
 
-def NewRecord(request):
+def new_record(request):
     """记录新的交易的时间及详细描述"""
+
     new_recordmoney = RecordMoney()
 
     # 如果是一个POST的请求，则对表单数据进行处理
@@ -148,3 +151,19 @@ def NewRecord(request):
         form = NewRecordMoneyForm()
 
     return render(request, 'RecordMoney/NewRecord.html', {'form': form})
+
+def data_visual(request):
+    """以可视化的方式查看收支记录数据"""
+        
+    # 创建数据库连接引擎
+    # 数据库类型://用户名:口令@机器地址:端口号/数据库名
+    engine = create_engine('postgresql://postgres:330715@localhost:5432/record-system')
+
+    # 标准sql查询语句，此处为测试返回数据库app_RecordMoney_recordmoney表的数据条目，之后可以用python处理字符串的方式动态扩展
+    sql = 'Select count(*) from public."app_RecordMoney_recordmoney"'
+
+    # 将sql语句结果读取至Pandas Dataframe
+    df = pandas.read_sql_query(sql, engine)
+
+    # 渲染前端网页，这里暂时渲染为最简单的HttpResponse，以后可以扩展
+    return HttpResponse(df.to_html()) 

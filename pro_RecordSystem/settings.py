@@ -25,7 +25,7 @@ SECRET_KEY = '8zwy!9kf@(e+pf5fn*7kj*7lv=d4n(*v%4%%)d)jtn3-yu$+=2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', '192.168.43.5']
+ALLOWED_HOSTS = ['*', ]
 
 
 # Application definition
@@ -99,7 +99,7 @@ DATABASES = {
 
         #PostgreSQL服务器设置
         'ENGINE': 'django.db.backends.postgresql',      # 数据库引擎
-        'NAME': 'record system',                        # 数据库名称
+        'NAME': 'record-system',                        # 数据库名称
         'USER': 'postgres',                             # 链接数据库的用户名
         'PASSWORD': '330715',                           # 链接数据库的密码，配置为空表示无密码
         'HOST': '',                                     # 服务器的域名和ip地址，配置为空表示连接的的是当前的PC
