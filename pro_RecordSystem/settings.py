@@ -29,7 +29,6 @@ ALLOWED_HOSTS = ['*', ]
 
 
 # Application definition
-
 INSTALLED_APPS = [
     #注册第三方的应用程序
     'bootstrap4', 
@@ -145,6 +144,10 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"), # 这里的"static"字符串参数为静态文件夹相对于工程根目录的相对位置
+)
 
 STATIC_URL = '/static/'
 

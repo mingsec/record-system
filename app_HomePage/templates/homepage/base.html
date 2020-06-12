@@ -1,21 +1,26 @@
 {% load bootstrap4 %}
 {% load static %}
-
-
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='full' %}
 
 
 <!DOCTYPE html>
+
+<!-- 网站主语言 -->
 <html lang="zh-cn">
     <head>
+        <!-- 网站采用的字符编码 -->
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-        <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-        <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <style></style>
+
+        <link rel="stylesheet" href="{% static 'datatables/dataTables.semanticui.min.css' %}">
+        <link rel="stylesheet" href="{% static 'Semantic-UI-CSS-master/semantic.min.css' %}">
+        <script src="{% static 'jquery/jquery-3.4.1.js' %}"></script>
+        <script src="{% static 'datatables/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'datatables/dataTables.semanticui.min.js' %}"></script>
+        <script src="{% static 'datatables/percentageBars.js' %}"></script>
+        <script type="text/javascript" src="{% static 'Semantic-UI-CSS-master/semantic.js' %}"></script>
+        <script src="{% static 'echarts/echarts.min.js' %}"></script>
+        <script src="{% static 'echarts/china.js' %}"></script>
         
         <title>
             {% block title %}
@@ -25,49 +30,26 @@
     </head>
 
     <body>
+        <!-- 引入导航栏 -->
         {% block header %}
-            <!-- 顶部导航栏 -->
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation">
-                <!--左上角的LOGO--> 
-                <a class="navbar-brand" href="{% url 'nsp_HomePage:HomePage' %}">
-                    <h2><i>Record System</i></h2>
-                </a>
-
-                <!--折叠菜单按钮--> 
-                <button class="navbar-toggler"                  type="button" 
-                        data-toggle="collapse"                  data-target="#navbarSupportedContent" 
-                        aria-controls="navbarSupportedContent"  aria-expanded="false" 
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!--配置动态折叠菜单的内容--> 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'nsp_RecordTime:RecordTime' %}">时间记录</a>
-                        </li>
-
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'nsp_RecordMoney:RecordMoney' %}">收支记录</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin">
-                                后台管理
-                            </a>
-                        </li>
-                    </ul>
-                </div>                      
-            </nav>
+            <div class="ui large top fixed inverted menu">
+                <div class="ui container">
+                    <a href="#" class="item">首页</a>
+                </div>
+            </div>
         {% endblock header %} 
 
 
-        {% block content %}
-        {% endblock content %}
+        <!-- 预留具体页面的位置 -->
+        {% block body %}
+        {% endblock body %}
 
 
+        <!-- 引入注脚 -->
         {% block footer %}
+            <div class="footer container-fluid text-center">
+                /*占位*/
+            </div>
         {% endblock footer %}
     </body>
 </html>

@@ -1,9 +1,20 @@
-{% extends "RecordMoney/base.html" %}
-{% load bootstrap4 %}
+<!-- extends表明此页面继承自homepage中的base.html文件 -->
+{% extends "homepage/base.html" %}
 
 
-{% block content%}
-    <a>&nbsp</a>  <!--占位符，空行-->
+{% block title %}
+    记录系统 | 收支详情
+{% endblock %}
+
+
+{% block header %}
+    {% include 'header.html' %}
+{% endblock header %}
+
+
+{% block body%}
+    <!-- 因为semantic ui的特性需要在body部分写个pusher避免内容被顶部导航栏遮挡 -->
+    <div id="pusher" class="pusher" style="padding-top:50px"></div>
 
     <div class="container-fluid">   
         <form action="#" method="GET" role="form" style="font-size:14px" >
@@ -76,4 +87,4 @@
             </tbody>
         </table>
     </div>
-{% endblock content %}
+{% endblock body %}
