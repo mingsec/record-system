@@ -1,38 +1,53 @@
-{% extends "RecordMoney/base.html" %}
+<!-- extends表明此页面继承自base.html文件 -->
+{% extends "base.html" %}
+
+
 {% load bootstrap4 %}
 
 
-{% block content%}
-    <a>&nbsp</a>  <!--占位符，空行-->
+{% block title %}
+    记录系统 | 新增收支记录
+{% endblock %}
+
+
+{% block header %}
+    {% include 'RecordMoney\Header.html' %}
+{% endblock header %}
+
+
+{% block body %}
+    <!-- 创建一个分割条 -->
+    <div class="container-fluid" style="height:30px" ></div>
 
     <div class="container-fluid">
         <p class="text-info" style="font-size:20px"><strong>增加收支记录:</strong></p>
     </div>
 
-    
-    <form action="" method="POST" style="font-size:14px">
+    <!-- 提交收支记录数据的表单 -->
+    <form action="" method="POST">
         <div class="container-fluid">
             {% csrf_token %}
             {% bootstrap_form form %}
 
             <div class="row">
                 <div class="col text-center">
-                    <button type="submit" class="btn btn-success"><b>保存</b></button>
+                    <button type="submit" class="btn btn-outline-primary"><b>保存</b></button>
                 </div>
 
                 <div class="col text-center">
-                    <button type="reset" class="btn btn-danger"><b>重置</b></button>
+                    <button type="reset" class="btn btn-outline-warning"><b>重置</b></button>
                 </div>
 
                 <div class="col text-center">
                     <a href="{% url 'nsp_RecordMoney:RecordMoney' %}">
-                        <button type="button" class="btn btn-secondary"><b>取消</b></button>
+                        <button type="button" class="btn btn-outline-info"><b>取消</b></button>
                     </a>
                 </div>
             </div>
         </div>        
     </form>     
     
+    <!-- 通过Ajax异步获取表单下拉框选项数据 -->
     <script>
         // 获取收支大类的选项
         $.get('/RecordMoney/Ajax/LoadIncomeAndExpenditureType/',function(data){
@@ -75,4 +90,12 @@
             });
         });
     </script>
-{% endblock content%}
+
+    <!-- 创建一个分割条 -->
+    <div class="container-fluid" style="height:30px" ></div>
+{% endblock body %}
+
+
+{% block footer %}
+    {% include 'RecordMoney\Footer.html' %}
+{% endblock footer %}

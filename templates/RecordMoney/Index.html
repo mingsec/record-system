@@ -1,21 +1,22 @@
-<!-- extends表明此页面继承自homepage中的base.html文件 -->
-{% extends "homepage/base.html" %}
+<!-- extends表明此页面继承自base.html文件 -->
+{% extends "base.html" %}
 
 
 {% block title %}
-    记录系统 | 收支详情
+    记录系统 | 收支记录详情
 {% endblock %}
 
 
 {% block header %}
-    {% include 'header.html' %}
+    {% include 'RecordMoney\Header.html' %}
 {% endblock header %}
 
 
 {% block body%}
-    <!-- 因为semantic ui的特性需要在body部分写个pusher避免内容被顶部导航栏遮挡 -->
-    <div id="pusher" class="pusher" style="padding-top:50px"></div>
+    <!-- 创建一个分割条 background-color:#ddd" -->
+    <div class="container-fluid" style="height:30px" ></div>
 
+    <!-- 收支记录的时间筛选器 -->
     <div class="container-fluid">   
         <form action="#" method="GET" role="form" style="font-size:14px" >
             <div class="input-group">
@@ -31,13 +32,19 @@
                 </div>
             </div>
         </form>
-
-        <h6>&nbsp</h6>  <!--占位符，空行-->
-
-        <p class="text-info" style="font-size:20px"><strong>{{ time_filter_label }}</strong></p>
     </div>
     
+    <!-- 创建一条分割线 
+    <hr class="simple" color="#6f5499" />
+    -->
+
+    <!-- 创建一个分割条 -->
+    <div class="container-fluid" style="height:20px" ></div>
+
+    <!-- 显示筛选后的收支记录 -->
     <div class="container-fluid" >
+        <p class="text-info" style="font-size:20px"><strong>{{ time_filter_label }}</strong></p>
+
         <table class="table table-hover text-center" style="font-size:14px">
             <thead class="thead-light" > 
                 <tr>
@@ -54,6 +61,7 @@
                     <th>金额(元)</th>
                     <th>账户</th>
                     <!-- <th>记录时间</th> -->
+                    <th>操作</th>
                 </tr>
             </thead>
 
@@ -73,6 +81,10 @@
                         <td class="text-right">{{ rm.amount }}</td>
                         <td>{{ rm.trading_account }}</td>
                         <!-- <td>{{ rm.record_time }}</td> -->
+                        <th>
+                            <a type="button">删除</a>
+                            <a>编辑</a>
+                        </th>
                     </tr>
                 {% empty %}
                     <tr>
@@ -87,4 +99,12 @@
             </tbody>
         </table>
     </div>
+
+    <!-- 创建一个分割条 -->
+    <div class="container-fluid" style="height:30px" ></div>
 {% endblock body %}
+
+
+{% block footer %}
+    {% include 'RecordMoney\Footer.html' %}
+{% endblock footer %}

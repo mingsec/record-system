@@ -165,5 +165,7 @@ def data_visual(request):
     # 将sql语句结果读取至Pandas Dataframe
     df = pandas.read_sql_query(sql, engine)
 
-    # 渲染前端网页，这里暂时渲染为最简单的HttpResponse，以后可以扩展
-    return HttpResponse(df.to_html()) 
+    # 设置上下文菜单
+    context = {'data':df}
+
+    return render(request, 'RecordMoney/Display.html', context)
