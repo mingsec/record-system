@@ -14,20 +14,10 @@
 
 {% block body%}
     <!-- 创建一个分割条 background-color:#ddd" -->
-    <div class="container" style="height:10px" ></div>
+    <div class="container-fluid" style="height:30px" ></div>
 
     <!-- 收支记录的时间筛选器 -->
-    <!-- 参数：inverted：反转颜色；segment：带矩形边框 -->
-    <div class="ui container form">
-        <select class="ui search dropdown" id="time_filter" name="time_filter">
-            <option value="">---请选择时间范围---</option>
-            <option value='1'>今日数据</option>
-            <option value='2'>本周数据</option>
-            <option value='3'>本月数据</option>
-            <option value='4'>本年数据</option>
-        </select>
-        <button class="right attached ui button">右边</button>
-    </div>
+    <div class="container-fluid">   
         <form action="#" method="GET" role="form" style="font-size:14px" >
             <div class="input-group">
                 <select class="form-control text-center" id="time_filter" name="time_filter">
