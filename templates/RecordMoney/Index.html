@@ -14,21 +14,11 @@
 
 {% block body%}
     <!-- 创建一个分割条 background-color:#ddd" -->
-    <div class="container" style="height:10px" ></div>
+    <div class="container-fluid" style="height:30px" ></div>
 
     <!-- 收支记录的时间筛选器 -->
-    <!-- 参数：inverted：反转颜色；segment：带矩形边框 -->
-    <div class="ui container form">
-        <select class="ui search dropdown" id="time_filter" name="time_filter">
-            <option value="">---请选择时间范围---</option>
-            <option value='1'>今日数据</option>
-            <option value='2'>本周数据</option>
-            <option value='3'>本月数据</option>
-            <option value='4'>本年数据</option>
-        </select>
-        <button class="right attached ui button">右边</button>
-    </div>
-        <form action="#" method="GET" role="form" style="font-size:14px" >
+    <div class="container-fluid">   
+        <form action="#" method="GET" role="form"> <!-- style="font-size:14px" -->
             <div class="input-group">
                 <select class="form-control text-center" id="time_filter" name="time_filter">
                     <option value=''>---请选择时间范围---</option>
@@ -53,9 +43,24 @@
 
     <!-- 显示筛选后的收支记录 -->
     <div class="container-fluid" >
-        <p class="text-info" style="font-size:20px"><strong>{{ time_filter_label }}</strong></p>
+        <div class="row">
+            <div class="col-9">
+                <p class="text-info" style="font-size:20px"><strong>{{ time_filter_label }}</strong></p>
+            </div>
+            <div class="col-3 text-right">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
 
-        <table class="table table-hover text-center" style="font-size:14px">
+        <table class="table table-hover text-center " >
             <thead class="thead-light" > 
                 <tr>
                     <!-- <th>年</th> -->

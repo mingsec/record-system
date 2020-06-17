@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- 网站主语言 -->
+<html lang="zh-cn">
+    <head>
+        <!-- 网站采用的字符编码 -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Semantic UI的CSS、Jquery和JS-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+                integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+
+        <title>
+            {% block title %}
+                猎户座工程 | 记录系统
+            {% endblock %}
+        </title>
+    </head>
+
+    <body>
+        <!-- 预留的导航栏 -->
+        {% block header %}
+        {% endblock header %} 
+
+
+        <!-- 预留的具体页面 -->
+        {% block body %}
+        {% endblock body %}
+
+
+        <!-- 预留的注脚 -->
+        {% block footer %}
+        {% endblock footer %}
+    </body>
+</html>

@@ -25,14 +25,11 @@ SECRET_KEY = '8zwy!9kf@(e+pf5fn*7kj*7lv=d4n(*v%4%%)d)jtn3-yu$+=2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', ]
+ALLOWED_HOSTS = ['*', '192.168.1.165']
 
 
 # Application definition
 INSTALLED_APPS = [
-    #注册第三方的应用程序
-    'bootstrap4', 
-
     #注册本项目的应用程序
     'app_HomePage.apps.AppHomepageConfig',
     'app_RecordTime.apps.AppRecordtimeConfig',

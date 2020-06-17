@@ -1,0 +1,82 @@
+<!-- extends表明此页面继承自HomePage中的base.html文件 -->
+{% extends "base.html" %}
+
+
+{% block header %}
+    <!-- 配置顶部导航栏 -->
+    <div class="ui inverted borderless stackable fix top menu">
+        <div class="active teal item">
+            <a href="{% url 'nsp_HomePage:HomePage' %}">
+                <i><h3>Record System</h3></i>
+            </a>
+        </div>
+
+        <a class="blue item" href="{% url 'nsp_RecordTime:RecordTime' %}">时间记录</a>
+        <a class="blue item" href="{% url 'nsp_RecordMoney:RecordMoney' %}">收支记录</a>
+        <a class="orange item" href="admin">后台管理</a>
+
+        <div class="right menu">
+            <a class="item">注册</a>
+        </div>
+    </div>
+{% endblock header %}
+
+{% block body%}
+    <!-- 因为semantic ui的特性需要在body部分写个pusher避免内容被顶部导航栏遮挡 -->
+    <div id="pusher" class="pusher" style="padding-top:10px"></div>
+
+    <!-- 增加记录的首页入口 -->
+    <div class="ui container">
+        <!-- 参数：stackable:根据窗口大小堆叠卡片；
+                  four doubling：在手机分辨率下一组卡片可以保持横向尺寸是列宽的两倍；
+                  raised：卡片可以凸显在整个页面上方 -->
+        <div class="ui raised four doubling cards"> 
+            <!-- 增加时间记录的快速入口 -->
+            <!-- 参数：red:设置卡片的颜色为红色；
+                  centered：使卡片居于容器的中间； -->
+            <div class="ui red centered card">
+                <div class="content">
+                    <div class="header">Record Time</div>
+                    <div class="meta">
+                        <span class="category">记录时间</span>
+                    </div>
+                    <!--
+                    <div class="description">
+                        <p>记录时间支出</p>
+                    </div>
+                    -->
+                </div>
+                <a class="image" >
+                    <img src="../static/images/RecordMoney/20200612004.jpg">
+                </a>
+                <a class="ui bottom attached button" href="{% url 'nsp_RecordTime:NewRecord' %}">
+                    <i class="add icon"></i>
+                    Add Record
+                </a>
+            </div>
+            
+            <!-- 增加收支记录的快速入口 -->
+            <div class="ui olive centered card">
+                <div class="content">
+                    <div class="header">Record Money</div>
+                    <div class="meta">
+                        <span class="category">记录收支</span>
+                    </div>
+                    <!--
+                    <div class="description">
+                        <p>记录时间支出</p>
+                    </div>
+                    -->
+                </div>
+                <a class="image" >
+                    <img src="../static/images/RecordMoney/20200612004.jpg">
+                </a>
+                <a class="ui bottom attached button" href="{% url 'nsp_RecordMoney:NewRecord' %}">
+                    <i class="add icon"></i>
+                    Add Record
+                </a>
+            </div>
+
+        </div>
+    </div>
+{% endblock body%}
