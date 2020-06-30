@@ -17,4 +17,4 @@ from django.http import HttpResponse
 # 请在下方创建视图.
 def homepage(request):
     """网站的主页"""
-    return render(request, 'homepage/homepage.html')
+    return render(request, 'HomePage/HomePage.html')
