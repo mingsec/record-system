@@ -71,7 +71,7 @@
                     <th>具体活动</th>                   
                     <th>活动描述</th>
                     <!-- <th>开始时间</th> -->
-                    <!-- <th>结束时间</th> -->
+                    <th>结束时间</th>
                     <th>耗用时长(min)</th>
                     <th>所属项目</th>
                     <!-- <th>记录时间</th> -->
@@ -89,8 +89,8 @@
                         <td>{{ rs.event }}</td>
                         <td class="text-left">{{ rs.event_description }}</td>
                         <!-- <td>{{ rs.begin_time }}</td> -->
-                        <!-- <td>{{ rs.end_time }}</td> -->
-                        <td>{{ rs.time_duration}} </td>
+                        <td>{{ rs.end_time }}</td>
+                        <td>{{ rs.time_duration}}</td>
                         <td>
                             {% if rs.project %}
                                 {{ rs.project }}
