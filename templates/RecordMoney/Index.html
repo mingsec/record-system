@@ -27,7 +27,7 @@
                     <option value='3'>本月数据</option>
                     <option value='4'>本年数据</option>
                 </select>
-                <div class="input-group-append  text-center">
+                <div class="input-group-append text-center">
                     <button type="submit" class="btn btn-success">查询</button>
                 </div>
             </div>
@@ -47,6 +47,8 @@
             <div class="col-9">
                 <p class="text-info" style="font-size:20px"><strong>{{ time_filter_label }}</strong></p>
             </div>
+
+            <!-- 表格分页
             <div class="col-3 text-right">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
@@ -58,6 +60,7 @@
                     </ul>
                 </nav>
             </div>
+            -->
         </div>
 
         <table class="table table-hover text-center " >
@@ -68,6 +71,7 @@
                     <!-- <th>日</th> -->
                     <!-- <th>周</th> -->
                     <!-- <th>所属期间</th> -->
+                    <th>交易日期</th>
                     <th>收支类型</th>
                     <th>一级科目</th>
                     <th>明细科目</th>
@@ -76,7 +80,7 @@
                     <th>金额(元)</th>
                     <th>账户</th>
                     <!-- <th>记录时间</th> -->
-                    <th>操作</th>
+                    <!-- <th>操作</th> -->
                 </tr>
             </thead>
 
@@ -88,6 +92,7 @@
                         <!-- <td>{{ rm.trading_day }}</td> -->
                         <!-- <td>{{ rm.trading_week }}</td> -->
                         <!-- <td>{{ rm.trading_period }}</td> -->
+                        <td>{{ rm.trading_year }}/{{ rm.trading_month }}/{{ rm.trading_day }}</td>
                         <td>{{ rm.trading_type }}</td>
                         <td>{{ rm.trading_first_level_account }}</td>
                         <td>{{ rm.trading_detail_account }}</td>
@@ -96,10 +101,12 @@
                         <td class="text-right">{{ rm.amount }}</td>
                         <td>{{ rm.trading_account }}</td>
                         <!-- <td>{{ rm.record_time }}</td> -->
+                        <!--
                         <th>
                             <a type="button">删除</a>
                             <a>编辑</a>
                         </th>
+                        -->
                     </tr>
                 {% empty %}
                     <tr>

@@ -16,13 +16,13 @@
     <!-- 创建一个分割条 -->
     <div class="container-fluid" style="height:20px" ></div>
 
-    <div class="container-fluid">
+    <div class="container">
         <p class="text-info" style="font-size:20px"><strong>增加收支记录:</strong></p>
     </div>
 
     <!-- 提交收支记录数据的表单 -->
     <form action="" method="POST">
-        <div class="container-fluid">
+        <div class="container">
             {% csrf_token %}
 
             {{ form.as_p }}

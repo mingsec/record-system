@@ -1,12 +1,24 @@
-{% extends "RecordTime/base.html" %}
-{% load bootstrap4 %}
+<!-- extends表明此页面继承自base.html文件 -->
+{% extends "base.html" %}
 
 
-{% block content%}
-    <a>&nbsp</a>  <!--占位符，空行-->
+{% block title %}
+    记录系统 | 时间记录详情
+{% endblock %}
 
+
+{% block header %}
+    {% include 'RecordTime\Header.html' %}
+{% endblock header %}
+
+
+{% block body%}
+    <!-- 创建一个分割条 background-color:#ddd" -->
+    <div class="container-fluid" style="height:30px" ></div>
+
+    <!-- 收支记录的时间筛选器 -->
     <div class="container-fluid">   
-        <form action="#" method="GET" role="form" style="font-size:14px" >
+        <form action="#" method="GET" role="form"> <!-- style="font-size:14px" -->
             <div class="input-group">
                 <select class="form-control text-center" id="time_filter" name="time_filter">
                     <option value=''>---请选择时间范围---</option>
@@ -20,25 +32,46 @@
                 </div>
             </div>
         </form>
+    </div>    
 
-        <h6>&nbsp</h6>  <!--占位符，空行-->
+    <!-- 创建一个分割条 -->
+    <div class="container-fluid" style="height:20px" ></div>
 
-        <p class="text-info" style="font-size:20px"><strong>{{ time_filter_label }}</strong></p>
-    </div>
-
+    <!-- 显示筛选后的收支记录 -->
     <div class="container-fluid" >
-        <table class="table table-hover text-center" style="font-size:14px">
+        <div class="row">
+            <div class="col-9">
+                <p class="text-info" style="font-size:20px"><strong>{{ time_filter_label }}</strong></p>
+            </div>
+
+            <!-- 表格分页
+            <div class="col-3 text-right">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                    </ul>
+                </nav>
+            </div>
+            -->
+        </div>
+
+        <table class="table table-hover text-center">
             <thead class="thead-light" > 
                 <tr>
                     <!-- <th>年</th> -->
                     <!-- <th>月</th> -->
                     <!-- <th>日</th> -->
                     <!-- <th>周</th> -->
+                    <th>活动日期</th>
                     <th>活动类型</th>
                     <th>具体活动</th>                   
                     <th>活动描述</th>
-                    <!-- <th>开始时间</th>  -->
-                    <th>结束时间</th>
+                    <!-- <th>开始时间</th> -->
+                    <!-- <th>结束时间</th> -->
                     <th>耗用时长(min)</th>
                     <th>所属项目</th>
                     <!-- <th>记录时间</th> -->
@@ -51,11 +84,12 @@
                         <!-- <td>{{ rs.event_month }}</td> -->
                         <!-- <td>{{ rs.event_day }}</td> -->
                         <!-- <td>{{ rs.event_week }}</td> -->
+                        <td>{{ rs.event_year }}/{{ rs.event_month }}/{{ rs.event_day }}</td>
                         <td>{{ rs.event_type }}</td>
                         <td>{{ rs.event }}</td>
                         <td class="text-left">{{ rs.event_description }}</td>
                         <!-- <td>{{ rs.begin_time }}</td> -->
-                        <td>{{ rs.end_time }}</td> 
+                        <!-- <td>{{ rs.end_time }}</td> -->
                         <td>{{ rs.time_duration}} </td>
                         <td>
                             {% if rs.project %}
@@ -79,4 +113,4 @@
             </tbody>
         </table>
     </div>
-{% endblock content %}
+{% endblock body %}
