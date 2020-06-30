@@ -3,12 +3,12 @@
 
 
 {% block title %}
-    记录系统 | 时间记录详情
+    记录系统 | 收支记录详情
 {% endblock %}
 
 
 {% block header %}
-    {% include 'RecordTime\Header.html' %}
+    {% include 'RecordMoney/Header.html' %}
 {% endblock header %}
 
 
@@ -24,7 +24,7 @@
                     <option value=''>---请选择时间范围---</option>
                     <option value='1'>今日数据</option>
                     <option value='2'>本周数据</option>
-                    <option value='3'>本月数据</option> 
+                    <option value='3'>本月数据</option>
                     <option value='4'>本年数据</option>
                 </select>
                 <div class="input-group-append text-center">
@@ -32,7 +32,11 @@
                 </div>
             </div>
         </form>
-    </div>    
+    </div>
+    
+    <!-- 创建一条分割线 
+    <hr class="simple" color="#6f5499" />
+    -->
 
     <!-- 创建一个分割条 -->
     <div class="container-fluid" style="height:20px" ></div>
@@ -59,46 +63,50 @@
             -->
         </div>
 
-        <table class="table table-hover text-center">
+        <table class="table table-hover text-center " >
             <thead class="thead-light" > 
                 <tr>
                     <!-- <th>年</th> -->
                     <!-- <th>月</th> -->
                     <!-- <th>日</th> -->
                     <!-- <th>周</th> -->
-                    <th>活动日期</th>
-                    <th>活动类型</th>
-                    <th>具体活动</th>                   
-                    <th>活动描述</th>
-                    <!-- <th>开始时间</th> -->
-                    <!-- <th>结束时间</th> -->
-                    <th>耗用时长(min)</th>
-                    <th>所属项目</th>
+                    <!-- <th>所属期间</th> -->
+                    <th>交易日期</th>
+                    <th>收支类型</th>
+                    <th>一级科目</th>
+                    <th>明细科目</th>
+                    <th>交易商家</th>
+                    <th>摘要</th>
+                    <th>金额(元)</th>
+                    <th>账户</th>
                     <!-- <th>记录时间</th> -->
+                    <!-- <th>操作</th> -->
                 </tr>
             </thead>
+
             <tbody>
-                {% for rs in record_times %}
+                {% for rm in record_moneys %}
                     <tr>
-                        <!-- <td>{{ rs.event_year }}</td> -->
-                        <!-- <td>{{ rs.event_month }}</td> -->
-                        <!-- <td>{{ rs.event_day }}</td> -->
-                        <!-- <td>{{ rs.event_week }}</td> -->
-                        <td>{{ rs.event_year }}/{{ rs.event_month }}/{{ rs.event_day }}</td>
-                        <td>{{ rs.event_type }}</td>
-                        <td>{{ rs.event }}</td>
-                        <td class="text-left">{{ rs.event_description }}</td>
-                        <!-- <td>{{ rs.begin_time }}</td> -->
-                        <!-- <td>{{ rs.end_time }}</td> -->
-                        <td>{{ rs.time_duration}} </td>
-                        <td>
-                            {% if rs.project %}
-                                {{ rs.project }}
-                            {% else %}
-                                --
-                            {% endif %}
-                        </td>
-                        <!-- <td>{{ rs.record_time }}</td> -->
+                        <!-- td>{{ rm.trading_year }}</td> -->
+                        <!-- <td>{{ rm.trading_month }}</td> -->
+                        <!-- <td>{{ rm.trading_day }}</td> -->
+                        <!-- <td>{{ rm.trading_week }}</td> -->
+                        <!-- <td>{{ rm.trading_period }}</td> -->
+                        <td>{{ rm.trading_year }}/{{ rm.trading_month }}/{{ rm.trading_day }}</td>
+                        <td>{{ rm.trading_type }}</td>
+                        <td>{{ rm.trading_first_level_account }}</td>
+                        <td>{{ rm.trading_detail_account }}</td>
+                        <td>{{ rm.trader }}</td>
+                        <td class="text-left">{{ rm.summary}} </td>
+                        <td class="text-right">{{ rm.amount }}</td>
+                        <td>{{ rm.trading_account }}</td>
+                        <!-- <td>{{ rm.record_time }}</td> -->
+                        <!--
+                        <th>
+                            <a type="button">删除</a>
+                            <a>编辑</a>
+                        </th>
+                        -->
                     </tr>
                 {% empty %}
                     <tr>
@@ -113,12 +121,12 @@
             </tbody>
         </table>
     </div>
-    
+
     <!-- 创建一个分割条 -->
     <div class="container-fluid" style="height:30px" ></div>
 {% endblock body %}
 
 
 {% block footer %}
-    {% include 'RecordTime\Footer.html' %}
+    {% include 'RecordMoney/Footer.html' %}
 {% endblock footer %}
