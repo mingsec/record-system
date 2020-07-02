@@ -12,6 +12,7 @@
 # 在下方引入需要的库
 from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.template import RequestContext
 #from django.core import serializers
 from sqlalchemy import create_engine
 import datetime
@@ -58,7 +59,7 @@ def ajax_load_TLAT(request):
 
 def index(request):
     """收支记录的首页,根据选择的时间范围选择记录进行展示"""
-    record_moneys = RecordMoney.objects.filter().order_by("-record_time")[:10]
+    record_moneys = RecordMoney.objects.filter().order_by("-trading_date")[:10]
     time_filter_label = "最近10条收支记录如下："
 
     if request.method == 'GET':
@@ -66,35 +67,47 @@ def index(request):
         time_filter = request.GET.get('time_filter')
 
         today = datetime.date.today()
-        current_year = today.year
-        current_month = today.month
-        current_week = today.isocalendar()[1]
-        current_day = today.day
-      
+        #current_week = today.isocalendar()[1]
+        #current_month = today.month
+        #current_year = today.year
+        #current_day = today.day
+
+        # 查询今日数据
         if time_filter == '1':
             record_moneys = RecordMoney.objects.filter(
-                trading_year=current_year,
-                trading_month=current_month,
-                trading_day=current_day
-            ).order_by("-record_time")
-            time_filter_label = "%s年%s月%s日的时间记录如下：" % (current_year, current_month, current_day)
+                #trading_year=current_year,
+                #trading_month=current_month,
+                trading_date=today
+            ).order_by("-trading_date")
+            time_filter_label = f"{ today.year }年{ today.month }月{ today.day }日的时间记录如下："
+        # 查询本周数据
         elif time_filter == '2':
+            # 计算当前日期是本周第几天
+            day_num = today.isoweekday()
+            # 计算当前日期所在周一
+            monday = (today - datetime.timedelta(days=day_num))
+            # 查询一周内的数据
             record_moneys = RecordMoney.objects.filter(
-                trading_year=current_year,
-                trading_week=current_week,
-            ).order_by("-record_time")
-            time_filter_label = "%s年第%s周的时间记录如下：" % (current_year,current_week )
+                #trading_year=current_year,
+                #trading_week=current_week,
+                trading_date__range=(today, monday)
+            ).order_by("-trading_date")
+            time_filter_label = f"{ today.year }年第{ today.isocalendar()[1] }周的时间记录如下："
+        # 查询本月数据
         elif time_filter == '3':
             record_moneys = RecordMoney.objects.filter(
-                trading_year=current_year,
-                trading_month=current_month,
-            ).order_by("-record_time")
-            time_filter_label = "%s年%s月的时间记录如下：" % (current_year, current_month)
+                #trading_year=current_year,
+                #trading_month=current_month,
+                trading_date__month=today.month
+            ).order_by("-trading_date")
+            time_filter_label = f"{ today.year }年{ today.month }月的时间记录如下："
+        # 查询本年数据
         elif time_filter == '4':
             record_moneys = RecordMoney.objects.filter(
-                trading_year=current_year,
-            ).order_by("-record_time")
-            time_filter_label = "%s年的时间记录如下：" % (current_year)
+                #trading_year=current_year,
+                trading_date__year=today.year
+            ).order_by("-trading_date")
+            time_filter_label = f"{ today.year }年的时间记录如下："
 
     context = {'record_moneys':record_moneys, 'time_filter_label':time_filter_label}
 

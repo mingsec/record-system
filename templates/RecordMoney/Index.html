@@ -14,11 +14,11 @@
 
 {% block body%}
     <!-- 创建一个分割条 background-color:#ddd" -->
-    <div class="container-fluid" style="height:30px" ></div>
+    <div class="container-fluid" style="height:10px" ></div>
 
     <!-- 收支记录的时间筛选器 -->
-    <div class="container-fluid">   
-        <form action="#" method="GET" role="form"> <!-- style="font-size:14px" -->
+    <div class="container-fluid shadow p-3 mb-4 bg-light text-dark">   
+        <form action="" method="GET" role="form"> <!-- style="font-size:14px" -->
             <div class="input-group">
                 <select class="form-control text-center" id="time_filter" name="time_filter">
                     <option value=''>---请选择时间范围---</option>
@@ -63,22 +63,22 @@
             -->
         </div>
 
-        <table class="table table-hover text-center " >
-            <thead class="thead-light" > 
+        <table class="table table-hover text-center bg-light" >
+            <thead class="thead-dark" > 
                 <tr>
+                    <th>交易日期</th>
                     <!-- <th>年</th> -->
                     <!-- <th>月</th> -->
-                    <!-- <th>日</th> -->
                     <!-- <th>周</th> -->
+                    <!-- <th>日</th> -->
                     <!-- <th>所属期间</th> -->
-                    <th>交易日期</th>
-                    <th>收支类型</th>
                     <th>一级科目</th>
-                    <th>明细科目</th>
+                    <th>二级科目</th>
+                    <th>三级科目</th>
                     <th>交易商家</th>
-                    <th>摘要</th>
-                    <th>金额(元)</th>
                     <th>账户</th>
+                    <th>金额(元)</th>
+                    <th>摘要</th>
                     <!-- <th>记录时间</th> -->
                     <!-- <th>操作</th> -->
                 </tr>
@@ -87,19 +87,19 @@
             <tbody>
                 {% for rm in record_moneys %}
                     <tr>
+                        <td>{{ rm.trading_date }}</td>
                         <!-- td>{{ rm.trading_year }}</td> -->
                         <!-- <td>{{ rm.trading_month }}</td> -->
                         <!-- <td>{{ rm.trading_day }}</td> -->
                         <!-- <td>{{ rm.trading_week }}</td> -->
                         <!-- <td>{{ rm.trading_period }}</td> -->
-                        <td>{{ rm.trading_year }}/{{ rm.trading_month }}/{{ rm.trading_day }}</td>
-                        <td>{{ rm.trading_type }}</td>
-                        <td>{{ rm.trading_first_level_account }}</td>
-                        <td>{{ rm.trading_detail_account }}</td>
+                        <td>{{ rm.trading_FLAT }}</td>
+                        <td>{{ rm.trading_SLAT }}</td>
+                        <td>{{ rm.trading_TLAT }}</td>
                         <td>{{ rm.trader }}</td>
-                        <td class="text-left">{{ rm.summary}} </td>
-                        <td class="text-right">{{ rm.amount }}</td>
                         <td>{{ rm.trading_account }}</td>
+                        <td class="text-right">{{ rm.amount }}</td>
+                        <td class="text-left">{{ rm.summary}} </td>
                         <!-- <td>{{ rm.record_time }}</td> -->
                         <!--
                         <th>
@@ -111,9 +111,8 @@
                 {% empty %}
                     <tr>
                         <td class="text-left" colspan="8">
-                            <!--第一个单元格与第二个单元格合并，
-                                colspan="8"意思是第一个单元格的长度改变成5个单元格的长度，
-                                也就是把第一个单元格长度边长五倍，第二个单元格的<td></td>删除。-->
+                            <!--单元格合并，colspan="8"意思是第一个单元格的长度改变成8个单元格的长度，
+                                也就是把第一个单元格长度变长八倍，第二个单元格的<td></td>删除。-->
                             尚未添加任何记录。
                         </td> 
                     </tr>
