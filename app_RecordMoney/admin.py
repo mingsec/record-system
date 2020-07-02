@@ -1,17 +1,11 @@
-#!/usr/bin/env python
+
 # -*- encoding: utf-8 -*-
-'''
-@File    :   admin.py
-@Time    :   2020/05/26 17:39:54
-@Author  :   Zefeng Zhu
-@Version :   1.0
-@Contact :   mingsec@outlook.com
-@License :   (C)Copyright 2009-2020, MingsecIndustry
-@Desc    :   None
-'''
 
 # 在下方引入需要的库
 from django.contrib import admin
+from .models import FirstLevelAccountTitles, SecondLevelAccountTitles, ThirdLevelAccountTitles, Accounts, RecordMoney
+
+'''
 from .models import IncomeAndExpenditureType, FirstLevelAccounts, DetailAccounts, Account, RecordMoney
 
 
@@ -117,3 +111,10 @@ admin.site.register(FirstLevelAccounts, FirstLevelAccountsAdmin)
 admin.site.register(DetailAccounts, DetailAccountsAdmin)
 admin.site.register(Account, AccountAdmin)
 admin.site.register(RecordMoney, RecordTimeAdmin)
+'''
+
+admin.site.register(FirstLevelAccountTitles)
+admin.site.register(SecondLevelAccountTitles)
+admin.site.register(ThirdLevelAccountTitles)
+admin.site.register(Accounts)
+admin.site.register(RecordMoney)

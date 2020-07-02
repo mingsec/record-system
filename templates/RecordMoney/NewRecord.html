@@ -14,7 +14,7 @@
 
 {% block body %}
     <!-- 创建一个分割条 -->
-    <div class="container-fluid" style="height:20px" ></div>
+    <div class="container-fluid" style="height:50px" ></div>
 
     <div class="container">
         <p class="text-info" style="font-size:20px"><strong>增加收支记录:</strong></p>
@@ -25,66 +25,127 @@
         <div class="container">
             {% csrf_token %}
 
-            {{ form.as_p }}
+            <!-- 时间字段 -->
+            <div class="form-row shadow-lg p-3 mb-5 bg-transparent text-dark">
+                <div class="form-group p-2 mb-2 col-md-6">
+                    {{ form.trading_date.errors }}
+                    {{ form.trading_date.label_tag }}
+                    {{ form.trading_date }}
+                </div>
+                <div class="form-group p-2 mb-5 col-md-6">
+                    {{ form.trading_period.errors }}
+                    {{ form.trading_period.label_tag }}
+                    {{ form.trading_period }}
+                </div>
+            </div>
 
-            <div class="row">
-                <div class="col text-center">
+            <!-- 科目字段 -->
+            <div class="form-row shadow-lg p-3 mb-5 bg-transparent text-dark">
+                <div class="form-group p-2 mb-2 col-md-4">
+                    {{ form.trading_FLAT.errors }}
+                    {{ form.trading_FLAT.label_tag }}
+                    {{ form.trading_FLAT }}
+                </div>
+                <div class="form-group p-2 mb-2 col-md-4">
+                    {{ form.trading_SLAT.errors }}
+                    {{ form.trading_SLAT.label_tag }}
+                    {{ form.trading_SLAT }}
+                </div>
+                <div class="form-group p-2 mb-2 col-md-4">
+                    {{ form.trading_TLAT.errors }}
+                    {{ form.trading_TLAT.label_tag }}
+                    {{ form.trading_TLAT }}
+                </div>
+            </div>
+
+            <!-- 账户字段 -->
+            <div class="form-row shadow-lg p-3 mb-5 bg-transparent text-dark">
+                <div class="form-group p-2 mb-2 col-md-6">
+                    {{ form.trader.errors }}
+                    {{ form.trader.label_tag }}
+                    {{ form.trader }}
+                </div>
+                <div class="form-group p-2 mb-2 col-md-3">
+                    {{ form.trading_accounts.errors }}
+                    {{ form.trading_accounts.label_tag }}
+                    {{ form.trading_accounts }}
+                </div>
+                <div class="form-group p-2 mb-2 col-md-3">
+                    {{ form.amount.errors }}
+                    {{ form.amount.label_tag }}
+                    {{ form.amount }}
+                </div>
+            </div>
+
+            <!-- 摘要字段 -->
+            <div class="form-row shadow-lg p-3 mb-5 bg-transparent text-dark">
+                <div class="form-group p-2 mb-2 col">
+                    {{ form.summary.errors }}
+                    {{ form.summary.label_tag }}
+                    {{ form.summary }}
+                </div> 
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col text-center">
                     <button type="submit" class="btn btn-outline-primary"><b>保存</b></button>
                 </div>
 
-                <div class="col text-center">
+                <div class="form-group col text-center">
                     <button type="reset" class="btn btn-outline-warning"><b>重置</b></button>
                 </div>
 
-                <div class="col text-center">
+                <div class="form-group col text-center">
                     <a href="{% url 'nsp_RecordMoney:RecordMoney' %}">
                         <button type="button" class="btn btn-outline-info"><b>取消</b></button>
                     </a>
                 </div>
             </div>
+
         </div>        
     </form>     
     
     
     <!-- 通过Ajax异步获取表单下拉框选项数据 -->
     <script>
+        <!--
         // 获取收支大类的选项
-        $.get('/RecordMoney/Ajax/LoadIncomeAndExpenditureType/',function(data){
-            for(var i=0, len=data.income_and_expenditure_types.length; i<len ;i++){
-                $new = $("<option value="+data.income_and_expenditure_types[i][0]+">"+data.income_and_expenditure_types[i][1]+"</option>");
-                $("#id_trading_type").append( $new );
-            }
-        });
-
-        // 收支大类选项改变以后
-        $("#id_trading_type").change(function(){    
-            // 清空一级科目、二级科目的数据
-            $("#id_trading_first_level_account").empty().append('<option value="">---请选择---</option>');
-            $("#id_trading_detail_account").empty().append('<option value="">---请选择---</option>');
+        // $.get('/RecordMoney/Ajax/LoadIncomeAndExpenditureType/',function(data){
+        //    for(var i=0, len=data.income_and_expenditure_types.length; i<len ;i++){
+        //        $new = $("<option value="+data.income_and_expenditure_types[i][0]+">"+data.income_and_expenditure_types[i][1]+"</option>");
+        //        $("#id_trading_type").append( $new );
+        //  }
+        //});
+    
+        // 一级科目选项改变以后
+        $("#id_trading_FLAT").change(function(){    
+            // 清空二级科目、三级科目的数据
+            $("#id_trading_SLAT").empty().append('<option value="">---请选择---</option>');
+            $("#id_trading_TLAT").empty().append('<option value="">---请选择---</option>');
             $.ajax({
-                url: '/RecordMoney/Ajax/LoadFirstLevelAccounts/',
+                url: '/RecordMoney/Ajax/LoadSLAT/',
                 type: 'GET',
-                data: {'trading_type_id': $(this).val()}
+                data: {'FLAT_id': $(this).val()}
             }).done(function(data){
-                for(var i = 0,len = data.first_level_accounts.length; i<len ;i++){
-                    $new = $("<option value="+data.first_level_accounts[i][0]+">"+data.first_level_accounts[i][1]+"</option>");
-                    $("#id_trading_first_level_account").append( $new );
+                for(var i = 0,len = data.trading_SLAT.length; i<len ;i++){
+                    $new = $("<option value="+data.trading_SLAT[i][0]+">"+data.trading_SLAT[i][1]+"</option>");
+                    $("#id_trading_SLAT").append( $new );
                 }
             });
         });
 
-        // 一级科目选项改变以后
-        $("#id_trading_first_level_account").change(function(){    
-            // 清空二级科目的数据
-            $("#id_trading_detail_account").empty().append('<option value="">---请选择---</option>');
+        // 二级科目选项改变以后
+        $("#id_trading_SLAT").change(function(){    
+            // 清空三级科目的数据
+            $("#id_trading_TLAT").empty().append('<option value="">---请选择---</option>');
             $.ajax({
-                url: '/RecordMoney/Ajax/LoadDetailAccounts/',
+                url: '/RecordMoney/Ajax/LoadTLAT/',
                 type: 'GET',
-                data: {'trading_first_level_accounts_id': $(this).val()}
+                data: {'SLAT_id': $(this).val()}
             }).done(function(data){
-                for(var i = 0,len = data.detail_accounts.length; i<len ;i++){
-                    $new = $("<option value="+data.detail_accounts[i][0]+">"+data.detail_accounts[i][1]+"</option>");
-                    $("#id_trading_detail_account").append( $new );
+                for(var i = 0,len = data.trading_TLAT.length; i<len ;i++){
+                    $new = $("<option value="+data.trading_TLAT[i][0]+">"+data.trading_TLAT[i][1]+"</option>");
+                    $("#id_trading_TLAT").append( $new );
                 }
             });
         });

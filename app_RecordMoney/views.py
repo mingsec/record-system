@@ -18,10 +18,10 @@ import datetime
 import json
 import pandas
 
-from .models import IncomeAndExpenditureType, FirstLevelAccounts, DetailAccounts, Account, RecordMoney
+from .models import FirstLevelAccountTitles, SecondLevelAccountTitles, ThirdLevelAccountTitles, Accounts, RecordMoney
 from .forms import NewRecordMoneyForm
 
-
+'''
 # 请在下方创建视图 
 def ajax_load_income_and_expenditure_type(request):
     """获取收支大类的选项数据"""
@@ -32,28 +32,29 @@ def ajax_load_income_and_expenditure_type(request):
         res.append([item.id, item.income_and_expenditure_type])
 
     return JsonResponse({'income_and_expenditure_types':res})
+'''
+def ajax_load_SLAT(request):
+    """获取二级科目的选项数据"""
+    FLAT_id = request.GET.get('FLAT_id')
 
-def ajax_load_first_level_accounts(request):
-    """获取一级科目的选项数据"""
-    income_and_expenditure_type_id = request.GET.get('trading_type_id')
-    first_level_accounts = FirstLevelAccounts.objects.filter(income_and_expenditure_type_id=income_and_expenditure_type_id).all()
-
-    res = []
-    for item in first_level_accounts:
-        res.append([item.id, item.first_level_account])
-
-    return JsonResponse({'first_level_accounts':res})
-
-def ajax_load_detail_accounts(request):
-    """获取明细科目的选项数据"""
-    first_level_account_id = request.GET.get('trading_first_level_accounts_id')
-    detail_accounts = DetailAccounts.objects.filter(first_level_account_id=first_level_account_id).all()
+    SLAT = SecondLevelAccountTitles.objects.filter(first_level_account_titles_id=FLAT_id).all()
 
     res = []
-    for item in detail_accounts:
-        res.append([item.id, item.detail_account])
+    for item in SLAT:
+        res.append([item.id, item.second_level_account_titles])
 
-    return JsonResponse({'detail_accounts':res})
+    return JsonResponse({'trading_SLAT':res})
+
+def ajax_load_TLAT(request):
+    """获取三级科目的选项数据"""
+    SLAT_id = request.GET.get('SLAT_id')
+    TLAT = ThirdLevelAccountTitles.objects.filter(second_level_account_titles_id=SLAT_id).all()
+
+    res = []
+    for item in TLAT:
+        res.append([item.id, item.third_level_account_titles])
+
+    return JsonResponse({'trading_TLAT':res})
 
 def index(request):
     """收支记录的首页,根据选择的时间范围选择记录进行展示"""
