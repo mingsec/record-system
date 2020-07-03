@@ -22,9 +22,10 @@ from .forms import NewRecordTimeForm
 def ajax_load_event_type(request):
     """获取活动大类的选项数据"""
     event_types = EventType.objects.all()
-
+    print(event_types)
     res = []
     for item in event_types:
+        print(item)
         res.append([item.id, item.event_type])
 
     return JsonResponse({'event_types':res})
@@ -33,9 +34,10 @@ def ajax_load_event(request):
     """获取活动明细类型的选项数据"""
     event_type_id = request.GET.get('event_type_id', None)
     events = Event.objects.filter(event_type_id=event_type_id).all()
-
+    print(events)
     res = []
     for item in events:
+        print(item)
         res.append([item.id, item.event])
 
     return JsonResponse({'events':res})
@@ -88,9 +90,9 @@ def NewRecord(request):
     """记录新的活动时间及详细描述"""
     new_recordtime = RecordTime()
 
-    # 如果是一个POST的请求，则对表单数据进行处理
+    # 如果是一个 POST 的请求，则对表单数据进行处理
     if request.method == 'POST':
-        # 创建一个NewRecordTimeForm的form类实体，并用request中的表单数据初始化它:
+        # 创建一个 NewRecordTimeForm 的 form 类实体，并用 request 中的表单数据初始化它:
         form = NewRecordTimeForm(request.POST)
         # 检查数据是否有效，如果有效则进行后续处理
         if form.is_valid():

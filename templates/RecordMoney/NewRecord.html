@@ -66,9 +66,9 @@
                     {{ form.trader }}
                 </div>
                 <div class="form-group p-2 mb-2 col-md-3">
-                    {{ form.trading_accounts.errors }}
-                    {{ form.trading_accounts.label_tag }}
-                    {{ form.trading_accounts }}
+                    {{ form.account.errors }}
+                    {{ form.account.label_tag }}
+                    {{ form.account }}
                 </div>
                 <div class="form-group p-2 mb-2 col-md-3">
                     {{ form.amount.errors }}
@@ -105,10 +105,11 @@
         </div>        
     </form>     
     
+    <!-- 创建一个分割条 -->
+    <div class="container-fluid" style="height:30px" ></div>
     
     <!-- 通过Ajax异步获取表单下拉框选项数据 -->
     <script>
-        <!--
         // 获取收支大类的选项
         // $.get('/RecordMoney/Ajax/LoadIncomeAndExpenditureType/',function(data){
         //    for(var i=0, len=data.income_and_expenditure_types.length; i<len ;i++){
@@ -150,9 +151,6 @@
             });
         });
     </script>
-
-    <!-- 创建一个分割条 -->
-    <div class="container-fluid" style="height:30px" ></div>
 {% endblock body %}
 
 

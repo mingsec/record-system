@@ -40,7 +40,7 @@ class NewRecordMoneyForm(forms.Form):
         widget=forms.Select(
             attrs={'class':'form-control'},
         ),
-        choices=[(0, "---请选择---")]
+        choices=[('0', "---请选择---")]
     )
 
     trading_TLAT = forms.ChoiceField(
@@ -48,7 +48,7 @@ class NewRecordMoneyForm(forms.Form):
         widget=forms.Select(
             attrs={'class':'form-control'}
         ),
-        choices=[(0, "---请选择---")]
+        choices=[('0', "---请选择---")]
     )
 
     trader = forms.CharField(
@@ -75,7 +75,7 @@ class NewRecordMoneyForm(forms.Form):
         decimal_places=2
     )
 
-    trading_accounts = forms.ModelChoiceField(
+    account = forms.ModelChoiceField(
         label = '交易账户',
         widget=forms.Select(
             attrs={'class':'form-control'}

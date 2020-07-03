@@ -14,41 +14,42 @@
 
 {% block body%}
     <!-- 创建一个分割条 background-color:#ddd" -->
-    <div class="container-fluid" style="height:10px" ></div>
-
-    <!-- 收支记录的时间筛选器 -->
-    <div class="container-fluid shadow p-3 mb-4 bg-light text-dark">   
-        <form action="" method="GET" role="form"> <!-- style="font-size:14px" -->
-            <div class="input-group">
-                <select class="form-control text-center" id="time_filter" name="time_filter">
-                    <option value=''>---请选择时间范围---</option>
-                    <option value='1'>今日数据</option>
-                    <option value='2'>本周数据</option>
-                    <option value='3'>本月数据</option>
-                    <option value='4'>本年数据</option>
-                </select>
-                <div class="input-group-append text-center">
-                    <button type="submit" class="btn btn-success">查询</button>
-                </div>
+    <div class="container-fluid" style="height:20px" ></div>
+    
+    <div class="container-fluid shadow pt-2 pb-2">
+        <div class="row">
+            <div class="col-sm-9">
+                <label class="text-info" style="font-size:20px">
+                    <strong>{{ time_filter_label }}</strong>
+                </label>
             </div>
-        </form>
+    
+            <!-- 收支记录的时间筛选器 -->
+            <div class="col-sm-3">
+                <form action="#" method="GET" role="form"> <!-- style="font-size:14px" -->
+                    <div class="input-group">
+                        <select class="custom-select text-center" id="time_filter" name="time_filter">
+                            <option value=''>---请选择时间范围---</option>
+                            <option value='1'>今日数据</option>
+                            <option value='2'>本周数据</option>
+                            <option value='3'>本月数据</option> 
+                            <option value='4'>本年数据</option>
+                        </select>
+                        <div class="input-group-append text-center">
+                            <button type="submit" class="btn btn-success">查询</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
     
-    <!-- 创建一条分割线 
-    <hr class="simple" color="#6f5499" />
-    -->
-
     <!-- 创建一个分割条 -->
     <div class="container-fluid" style="height:20px" ></div>
 
     <!-- 显示筛选后的收支记录 -->
-    <div class="container-fluid" >
-        <div class="row">
-            <div class="col-9">
-                <p class="text-info" style="font-size:20px"><strong>{{ time_filter_label }}</strong></p>
-            </div>
-
-            <!-- 表格分页
+    <div class="container-fluid table-responsive-sm" >
+        <!-- 表格分页
             <div class="col-3 text-right">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
@@ -60,10 +61,9 @@
                     </ul>
                 </nav>
             </div>
-            -->
-        </div>
+        -->
 
-        <table class="table table-hover text-center bg-light" >
+        <table class="table table-hover text-center bg-light text-nowrap" >
             <thead class="thead-dark" > 
                 <tr>
                     <th>交易日期</th>
@@ -123,6 +123,21 @@
 
     <!-- 创建一个分割条 -->
     <div class="container-fluid" style="height:30px" ></div>
+
+    <!-- 通过Ajax异步获取表格数据 -->
+    <script>
+         // 时间范围的数据改变以后
+         //$("#id_time_filter").change(function(){    
+         //   $.ajax({
+         //       url: '/RecordMoney/Ajax/LoadQuery/',
+         //       type: 'GET',
+         //       data: {'time_filter': $(this).val()}
+         //   }).done(function(data){
+         //       record_moneys = data.record_moneys;
+         //       time_filter_label= data.time_filter_label;   
+         //   });
+         //});
+    </script>
 {% endblock body %}
 
 

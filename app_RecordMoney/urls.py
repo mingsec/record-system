@@ -20,7 +20,6 @@ urlpatterns = [
     path('Index/', views.index, name='RecordMoney'),
     path('NewRecord/', views.new_record, name='NewRecord'),
     path('DataVisual/', views.data_visual, name='DataVisual'),
-    #path('Ajax/LoadIncomeAndExpenditureType/', views.ajax_load_income_and_expenditure_type, name='AjaxLoadIncomeAndExpenditureType'),
     path('Ajax/LoadSLAT/', views.ajax_load_SLAT, name='AjaxLoadSLAT'),
     path('Ajax/LoadTLAT/', views.ajax_load_TLAT, name='AjaxLoadTLAT'),
 ]
