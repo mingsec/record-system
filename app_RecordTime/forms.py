@@ -1,46 +1,63 @@
 # -*- encoding: utf-8 -*-
-'''
-@File    :   forms.py
-@Time    :   2020/05/14 16:17:28
-@Author  :   Zhu Zefeng 
-@Version :   1.0
-@Contact :   mingsec@outlook.com
-@License :   (C)Copyright 2009-2020, MingsecIndust
-@Desc    :   None
-'''
+
 
 # 请在下面输入需要引入的库
 from django import forms
-from .models import EventType, Event, Project, RecordTime
+from .models import EventTypes, Projects
 
 
 class NewRecordTimeForm(forms.Form): 
     '''记录时间的表单'''
-    begin_time = forms.CharField(
-        label = '活动开始时间', 
-        widget = forms.DateTimeInput(attrs={'class':'form-control', 'type': 'datetime-local'})
+    begin_time = forms.DateTimeField(
+        label='开始时间', 
+        widget=forms.DateTimeInput(
+            attrs={'class':'form-control', 'type': 'datetime-local'},
+            #format=('%Y/%m/%d %H:%M'),
+            
+        ),
+        input_formats=['%Y-%m-%dT%H:%M']
     )
-    end_time   = forms.CharField(
-        label = '活动结束时间',
-        widget = forms.DateTimeInput(attrs={'class':'form-control', 'type': 'datetime-local'})
+
+    end_time = forms.DateTimeField(
+        label='结束时间',
+        widget=forms.DateTimeInput(
+            attrs={'class':'form-control', 'type': 'datetime-local'},
+            #format=('%Y-%m-%d %H:%M'),
+        ),
+        input_formats=['%Y-%m-%dT%H:%M']
     )
-    event_type = forms.CharField(
-        label = '请选择活动的大类', 
-        widget = forms.Select(attrs={'class':'form-control'}, choices=[('0',"---请选择---")])
+
+    event_type = forms.ModelChoiceField(
+        label='请选择活动类型', 
+        widget=forms.Select(
+            attrs={'class':'form-control'},
+        ),
+        queryset=EventTypes.objects.all(), 
+        empty_label="---请选择---",
     )
-    event = forms.CharField(
-        label = '请选择活动的明细类', 
-        widget = forms.Select(attrs={'class':'form-control'}, choices=[('0',"---请选择---")])
+
+    event = forms.IntegerField(
+        label='请选择具体活动', 
+        widget=forms.Select(
+            attrs={'class':'form-control'}, 
+            choices=[(0,"---请选择---")],
+        ),
     )
-    event_description = forms.CharField(
-        label = '活动描述', 
-        widget = forms.Textarea(attrs={'class':'form-control', 'rows':'2', 'placeholder':"请对活动事项做简要描述"}),
-        max_length = 255
-    )
+
     project = forms.ModelChoiceField(
-        label = '请选择活动所属的项目', 
-        queryset=Project.objects.all(), 
+        label='请选择所属项目', 
+        widget=forms.Select(
+            attrs={'class':'form-control'}
+        ),
+        queryset=Projects.objects.all(), 
         empty_label="---请选择---",
         required=False,
-        widget=forms.Select(attrs={'class':'form-control'})
+    )
+    
+    event_description = forms.CharField(
+        label='活动描述', 
+        widget=forms.Textarea(
+            attrs={'class':'form-control', 'rows':'3', 'placeholder':"请简要描述活动事项"},
+        ),
+        max_length = 255
     )

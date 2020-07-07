@@ -70,9 +70,9 @@ class RecordMoney(models.Model):
     trading_SLAT = models.ForeignKey(SecondLevelAccountTitles, on_delete=models.CASCADE, verbose_name="二级科目")
     trading_TLAT = models.ForeignKey(ThirdLevelAccountTitles, on_delete=models.CASCADE, verbose_name="三级科目")
     trader = models.CharField(verbose_name="交易商家", max_length=20)
-    summary = models.CharField(verbose_name="摘要", max_length=255)
-    amount = models.DecimalField(verbose_name="金额(元)", max_digits=12, decimal_places=2)
     account = models.ForeignKey(Accounts, on_delete=models.CASCADE, verbose_name="交易账户")
+    amount = models.DecimalField(verbose_name="金额(元)", max_digits=12, decimal_places=2)
+    summary = models.CharField(verbose_name="摘要", max_length=255)
     record_time = models.DateTimeField("记录时间", auto_now_add=True)
 
     class Meta:

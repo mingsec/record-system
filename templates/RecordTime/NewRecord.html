@@ -14,46 +14,91 @@
 
 {% block body%}
     <!-- 创建一个分割条 -->
-    <div class="container-fluid" style="height:20px" ></div>
+    <div class="container-fluid" style="height:30px" ></div>
 
     <div class="container">
         <p class="text-info" style="font-size:20px"><strong>增加时间记录:</strong></p>
     </div>
 
+    <!-- 提交收支记录数据的表单 -->
     <form action="" method="POST">
         <div class="container">
             {% csrf_token %}
 
-            {{ form.as_p }}
+            <!-- 时间字段 -->
+            <div class="form-row shadow mb-4 bg-light text-dark">
+                <div class="form-group p-2 mb-2  col-md-6">
+                    {{ form.begin_time.errors }}
+                    {{ form.begin_time.label_tag }}
+                    {{ form.begin_time }}
+                </div>
+                <div class="form-group p-2 mb-2 col-md-6">
+                    {{ form.end_time.errors }}
+                    {{ form.end_time.label_tag }}
+                    {{ form.end_time }}
+                </div>
+            </div>
 
-            <div class="row">
-                <div class="col text-center">
+            <!-- 类型及项目字段 -->
+            <div class="form-row shadow mb-4  bg-light text-dark">
+                <div class="form-group p-2 mb-2 col-md-4">
+                    {{ form.event_type.errors }}
+                    {{ form.event_type.label_tag }}
+                    {{ form.event_type }}
+                </div>
+                <div class="form-group p-2 mb-2 col-md-4">
+                    {{ form.event.errors }}
+                    {{ form.event.label_tag }}
+                    {{ form.event }}
+                </div>
+                <div class="form-group p-2 mb-2 col-md-4">
+                    {{ form.project.errors }}
+                    {{ form.project.label_tag }}
+                    {{ form.project }}
+                </div>
+            </div>
+
+            <!-- 描述字段 -->
+            <div class="form-row shadow mb-4 bg-light text-dark">
+                <div class="form-group p-2 mb-2 col">
+                    {{ form.event_description.errors }}
+                    {{ form.event_description.label_tag }}
+                    {{ form.event_description }}
+                </div> 
+            </div>
+
+            <!-- 按钮组 -->
+            <div class="form-row">
+                <div class="form-group col text-center">
                     <button type="submit" class="btn btn-outline-primary"><b>保存</b></button>
                 </div>
 
-                <div class="col text-center">
+                <div class="form-group col text-center">
                     <button type="reset" class="btn btn-outline-warning"><b>重置</b></button>
                 </div>
 
-                <div class="col text-center">
+                <div class="form-group col text-center">
                     <a href="{% url 'nsp_RecordTime:RecordTime' %}">
                         <button type="button" class="btn btn-outline-info"><b>取消</b></button>
                     </a>
                 </div>
             </div>
         </div>        
-    </form>     
+    </form>  
+
+    <!-- 创建一个分割条 -->
+    <div class="container-fluid" style="height:30px" ></div>
 
     <script>
         // 获取活动的大类选项
-        $.get('/RecordTime/Ajax/LoadEventTpye/',function(data){
-            for(var i=0, len=data.event_types.length; i<len ;i++){
-                $new = $("<option value="+data.event_types[i][0]+">"+data.event_types[i][1]+"</option>");
-                $("#id_event_type").append( $new );
-            }
-        });
+        //$.get('/RecordTime/Ajax/LoadEventTpye/',function(data){
+        //    for(var i=0, len=data.event_types.length; i<len ;i++){
+        //        $new = $("<option value="+data.event_types[i][0]+">"+data.event_types[i][1]+"</option>");
+        //        $("#id_event_type").append( $new );
+        //    }
+        //});
 
-        // 活动的大类选项改变以后
+        // 活动类型的数据改变以后
         $("#id_event_type").change(function(){    
             // 清空活动的明细类型数据
             $("#id_event").empty().append('<option value="">---请选择---</option>');
@@ -69,9 +114,6 @@
             });
         });
     </script>
-
-    <!-- 创建一个分割条 -->
-    <div class="container-fluid" style="height:30px" ></div>
 {% endblock body%}
 
 

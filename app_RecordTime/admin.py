@@ -12,13 +12,13 @@
 
 # 请在下面输入需要引入的库
 from django.contrib import admin
-from .models import EventType, Event, Project, RecordTime
+from .models import EventTypes, Events, Projects, RecordTime
 
 
 admin.site.site_header = 'Record System后台管理'  # 此处设置页面显示标题
 admin.site.site_title = '后台管理'                # 此处设置页面头部标题
  
-
+'''
 class EventTypeAdmin(admin.ModelAdmin):
     """自定义活动大类的字段的展示形式"""
     # listdisplay设置要显示在列表中的字段（id字段是Django模型的默认主键）
@@ -88,10 +88,10 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display_links = ('project',)
     # ordering设置默认排序字段，负号表示降序排序
     ordering = ('id',)
-
+'''
 
 # 在下方注册应用程序的模型
-admin.site.register(EventType, EventTypeAdmin)
-admin.site.register(Event, EventAdmin)
-admin.site.register(Project, ProjectAdmin)
-admin.site.register(RecordTime, RecordTimeAdmin)
+admin.site.register(EventTypes, )
+admin.site.register(Events, )
+admin.site.register(Projects,)
+admin.site.register(RecordTime, )

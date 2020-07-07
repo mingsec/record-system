@@ -35,20 +35,24 @@ class NewRecordMoneyForm(forms.Form):
         empty_label="---请选择---",
     )
 
-    trading_SLAT = forms.ChoiceField(
+    # 由于下拉框的选项值需要从前端动态加载，所以不能选择 ChoiceField ，
+    # 否则验证无法通过，即 choices 中的 value 与前端提供的不一致
+    trading_SLAT = forms.IntegerField(
         label='二级科目',
         widget=forms.Select(
             attrs={'class':'form-control'},
+            choices=[(0, "---请选择---")]
         ),
-        choices=[('0', "---请选择---")]
     )
 
-    trading_TLAT = forms.ChoiceField(
+    # 由于下拉框的选项值需要从前端动态加载，所以不能选择 ChoiceField ，
+    # 否则验证无法通过，即 choices 中的 value 与前端提供的不一致
+    trading_TLAT = forms.IntegerField(
         label='三级科目', 
         widget=forms.Select(
-            attrs={'class':'form-control'}
-        ),
-        choices=[('0', "---请选择---")]
+            attrs={'class':'form-control'},
+            choices=[(0, "---请选择---")]
+        ), 
     )
 
     trader = forms.CharField(

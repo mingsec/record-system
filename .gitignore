@@ -2,3 +2,4 @@ env_rs/
 __pycache__/
 .vscode
 .git
+migrations/

@@ -134,6 +134,7 @@ TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
+# True那么语言环境规定的格式具有更高的优先级并将被应用
 USE_L10N = True
 
 USE_TZ = False

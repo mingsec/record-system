@@ -1,19 +1,9 @@
 # -*- encoding: utf-8 -*-
-'''
-@File    :   views.py
-@Time    :   2020/05/26 15:53:56
-@Author  :   Zefeng Zhu
-@Version :   1.0
-@Contact :   mingsec@outlook.com
-@License :   (C)Copyright 2009-2020, MingsecIndustry
-@Desc    :   None
-'''
+
 
 # 在下方引入需要的库
 from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.template import RequestContext
-#from django.core import serializers
 from sqlalchemy import create_engine
 import datetime
 import json
@@ -33,7 +23,7 @@ def ajax_load_SLAT(request):
     res = []
     for item in SLAT:
         res.append([item.id, item.second_level_account_titles])
-       
+    
     return JsonResponse({'trading_SLAT':res})
 
 def ajax_load_TLAT(request):
@@ -48,8 +38,8 @@ def ajax_load_TLAT(request):
     return JsonResponse({'trading_TLAT':res})
 
 def index(request):
-    """收支记录的首页,根据选择的时间范围选择记录进行展示"""
-    record_moneys = RecordMoney.objects.filter().order_by("-trading_date")[:10]
+    """收支记录的首页,根据选择的时间范围筛选记录进行展示"""
+    record_moneys = RecordMoney.objects.filter().order_by("-trading_date", "-record_time")[:10]
     time_filter_label = "最近10条收支记录如下："
 
     if request.method == 'GET':
@@ -62,30 +52,26 @@ def index(request):
         if time_filter == '1':
             record_moneys = RecordMoney.objects.filter(
                 trading_date=today
-            ).order_by("-trading_date")
+            ).order_by("-trading_date", "-record_time")
             time_filter_label = f"{ today.year }年{ today.month }月{ today.day }日的时间记录如下："
         # 查询本周数据
         elif time_filter == '2':
-            # 计算当前日期是本周第几天
-            day_num = today.isoweekday()
-            # 计算当前日期所在周一
-            monday = (today - datetime.timedelta(days=day_num))
-            # 查询一周内的数据
             record_moneys = RecordMoney.objects.filter(
-                trading_date__range=(today, monday)
-            ).order_by("-trading_date")
+                trading_week=today.isocalendar()[1]
+            ).order_by("-trading_date", "-record_time")
+            print(record_moneys)
             time_filter_label = f"{ today.year }年第{ today.isocalendar()[1] }周的时间记录如下："
         # 查询本月数据
         elif time_filter == '3':
             record_moneys = RecordMoney.objects.filter(
                 trading_date__month=today.month
-            ).order_by("-trading_date")
+            ).order_by("-trading_date", "-record_time")
             time_filter_label = f"{ today.year }年{ today.month }月的时间记录如下："
         # 查询本年数据
         elif time_filter == '4':
             record_moneys = RecordMoney.objects.filter(
                 trading_date__year=today.year
-            ).order_by("-trading_date")
+            ).order_by("-trading_date", "-record_time")
             time_filter_label = f"{ today.year }年的时间记录如下："
 
     context = {'record_moneys':record_moneys, 'time_filter_label':time_filter_label}
@@ -93,7 +79,7 @@ def index(request):
     return render(request, 'RecordMoney/Index.html', context)
 
 def new_record(request):
-    """保存新的交易的时间及详细描述"""
+    """保存新交易的时间及详细描述等信息"""
 
     new_recordmoney = RecordMoney()
 
@@ -102,44 +88,34 @@ def new_record(request):
         # 创建一个 NewRecordTimeForm 的 form 类实体，并用 request 中的表单数据初始化它:
         form = NewRecordMoneyForm(request.POST)
         # 检查数据是否有效，如果有效则进行后续处理
-        
-        
         if form.is_valid():
-            print(form.cleaned_data['trading_FLAT'])
-            print(form.cleaned_data['trading_SLAT'])
-        '''
-            # 表单中的数据存储在 form.cleaned_data 字典中，通过读取字典中键的值获取表单中的数据
-            print("test")
-            trading_date = datetime.datetime.strptime(form.cleaned_data['trading_date'],'%Y-%m-%d')
-            print(trading_date)
-            FLAT_id = form.cleaned_data['trading_FLAT']
+            # 表单中的数据存储在 form.cleaned_data 字典中，通过读取字典中键的值获取表单中的数据，用于查找数据库记录
+            #trading_date = datetime.datetime.strptime(form.cleaned_data['trading_date'], '%Y/%m/%d')
+            #FLAT = form.cleaned_data['trading_FLAT']
             SLAT_id = form.cleaned_data['trading_SLAT']
             TLAT_id = form.cleaned_data['trading_TLAT']
-            
-            
-
+        
             # 根据表单中的数据获取数据库记录
-            trading_FLAT = FirstLevelAccountTitles.objects.get(id=FLAT_id)
+            #trading_FLAT = FirstLevelAccountTitles.objects.get(first_level_account_titles=FLAT)
             trading_SLAT = SecondLevelAccountTitles.objects.get(id=SLAT_id)
             trading_TLAT = ThirdLevelAccountTitles.objects.get(id=TLAT_id)
             
             # 给 new_recordtime 记录赋值
-            new_recordmoney.trading_date = trading_date
-            new_recordmoney.trading_week = trading_date.isocalendar()[1]   #返回结束日期的星期
+            new_recordmoney.trading_date = form.cleaned_data['trading_date']
+            new_recordmoney.trading_week = form.cleaned_data['trading_date'].isocalendar()[1]   #返回结束日期的星期
             new_recordmoney.trading_period = form.cleaned_data['trading_period']
-            new_recordmoney.trading_FLAT = trading_FLAT
+            new_recordmoney.trading_FLAT = form.cleaned_data['trading_FLAT']
             new_recordmoney.trading_SLAT = trading_SLAT
             new_recordmoney.trading_TLAT = trading_TLAT
             new_recordmoney.trader = form.cleaned_data['trader']
             new_recordmoney.summary = form.cleaned_data['summary']
             new_recordmoney.amount = form.cleaned_data['amount']
             new_recordmoney.account = form.cleaned_data['account']
-        '''
-            #print(new_recordmoney)
+
             # 保存 new_recordmoney 记录
-            #new_recordmoney.save()
+            new_recordmoney.save()
             
-            #return HttpResponseRedirect(reverse('nsp_RecordMoney:NewRecord'))
+            return HttpResponseRedirect(reverse('nsp_RecordMoney:NewRecord'))
 
     # 如果是一个GET(或其他方式)的请求，我们将创建一个空的表单
     else:

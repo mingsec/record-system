@@ -14,17 +14,19 @@
 
 {% block body%}
     <!-- 创建一个分割条 background-color:#ddd" -->
-    <div class="container-fluid" style="height:20px" ></div>
+    <div class="container-fluid" style="height:30px" ></div>
     
+    <!-- 筛选记录时间范围 -->
     <div class="container-fluid shadow pt-2 pb-2">
         <div class="row">
+            <!-- 时间范围提示 -->
             <div class="col-sm-9">
                 <label class="text-info" style="font-size:20px">
                     <strong>{{ time_filter_label }}</strong>
                 </label>
             </div>
     
-            <!-- 收支记录的时间筛选器 -->
+            <!-- 时间筛选器 -->
             <div class="col-sm-3">
                 <form action="#" method="GET" role="form"> <!-- style="font-size:14px" -->
                     <div class="input-group">
@@ -50,27 +52,25 @@
     <!-- 显示筛选后的收支记录 -->
     <div class="container-fluid table-responsive-sm" >
         <!-- 表格分页
-            <div class="col-3 text-right">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">上一页</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">下一页</a></li>
-                    </ul>
-                </nav>
-            </div>
+        <div class="col-3 text-right">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                </ul>
+            </nav>
+        </div>
         -->
 
+        <!-- 展示查询结果 -->
         <table class="table table-hover text-center bg-light text-nowrap" >
-            <thead class="thead-dark" > 
+            <thead class="thead-dark"> 
                 <tr>
                     <th>交易日期</th>
-                    <!-- <th>年</th> -->
-                    <!-- <th>月</th> -->
                     <!-- <th>周</th> -->
-                    <!-- <th>日</th> -->
                     <!-- <th>所属期间</th> -->
                     <th>一级科目</th>
                     <th>二级科目</th>
@@ -84,7 +84,7 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody style="font-size:14px">
                 {% for rm in record_moneys %}
                     <tr>
                         <td>{{ rm.trading_date }}</td>
@@ -97,16 +97,14 @@
                         <td>{{ rm.trading_SLAT }}</td>
                         <td>{{ rm.trading_TLAT }}</td>
                         <td>{{ rm.trader }}</td>
-                        <td>{{ rm.trading_account }}</td>
+                        <td>{{ rm.account }}</td>
                         <td class="text-right">{{ rm.amount }}</td>
                         <td class="text-left">{{ rm.summary}} </td>
                         <!-- <td>{{ rm.record_time }}</td> -->
-                        <!--
-                        <th>
+                        <!-- <th>
                             <a type="button">删除</a>
                             <a>编辑</a>
-                        </th>
-                        -->
+                        </th> -->
                     </tr>
                 {% empty %}
                     <tr>
