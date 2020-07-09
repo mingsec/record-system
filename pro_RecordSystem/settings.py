@@ -95,7 +95,7 @@ DATABASES = {
 
         #PostgreSQL服务器设置
         'ENGINE': 'django.db.backends.postgresql',      # 数据库引擎
-        'NAME': 'RecordSystem',                        # 数据库名称
+        'NAME': 'record_system',                        # 数据库名称
         'USER': 'postgres',                             # 链接数据库的用户名
         'PASSWORD': '330715',                           # 链接数据库的密码，配置为空表示无密码
         'HOST': '',                                     # 服务器的域名和ip地址，配置为空表示连接的的是当前的PC
