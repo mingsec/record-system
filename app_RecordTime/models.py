@@ -60,7 +60,7 @@ class RecordTime(models.Model):
     record_time = models.DateTimeField(verbose_name="记录时间", auto_now_add=True)
 
     class Meta:
-        db_table = "RT_RecordTime"
+        db_table = "RT_Record_Time"
         verbose_name = "时间记录表"
         verbose_name_plural = "时间记录表"
 

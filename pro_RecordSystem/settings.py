@@ -80,8 +80,8 @@ WSGI_APPLICATION = 'pro_RecordSystem.wsgi.application'
 DATABASES = {
     'default': {
         #SQLite服务器设置
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'RecordSystem.sqlite3'),
         
 
         #MySQL服务器设置
@@ -94,12 +94,12 @@ DATABASES = {
         
 
         #PostgreSQL服务器设置
-        'ENGINE': 'django.db.backends.postgresql',      # 数据库引擎
-        'NAME': 'record_system',                        # 数据库名称
-        'USER': 'postgres',                             # 链接数据库的用户名
-        'PASSWORD': '330715',                           # 链接数据库的密码，配置为空表示无密码
-        'HOST': '',                                     # 服务器的域名和ip地址，配置为空表示连接的的是当前的PC
-        'PORT': '5432'                                  # 端口号,默认是5432
+        #'ENGINE': 'django.db.backends.postgresql',      # 数据库引擎
+        #'NAME': 'record_system',                        # 数据库名称
+        #'USER': 'postgres',                             # 链接数据库的用户名
+        #'PASSWORD': '330715',                           # 链接数据库的密码，配置为空表示无密码
+        #'HOST': '',                                     # 服务器的域名和ip地址，配置为空表示连接的的是当前的PC
+        #'PORT': '5432'                                  # 端口号,默认是5432
     }
 }
 
