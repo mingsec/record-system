@@ -63,6 +63,9 @@ def index(request):
 
 def NewRecord(request):
     """记录新活动的时间及详细描述等信息"""
+
+    record_times = RecordTime.objects.filter().order_by("-end_time", "-record_time")[:3]
+
     new_recordtime = RecordTime()
 
     # 如果是一个 POST 的请求，则对表单数据进行处理
@@ -99,4 +102,4 @@ def NewRecord(request):
     else:
         form = NewRecordTimeForm()
 
-    return render(request, 'RecordTime/NewRecord.html', {'form': form})
+    return render(request, 'RecordTime/NewRecord.html', {'form': form, 'record_times':record_times})

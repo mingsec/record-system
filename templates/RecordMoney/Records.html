@@ -1,0 +1,230 @@
+<!-- extends表明此页面继承自base.html文件-->
+{% extends "base.html" %}
+ 
+
+{% block title %}
+    记录系统 | 查询收支记录
+{% endblock %}
+
+
+{% block header %}
+    {% include 'RecordMoney/Header.html' %}
+{% endblock header %}
+
+
+{% block body %}
+    <!-- 创建一个分割条 -->
+    <div class="container-fluid" style="height:30px" ></div>
+
+
+    <!-- 整个页面划分为2个部分，左边2/12为筛选器，右边10/12为筛选结果 -->
+    <div class="container-fluid row">
+        <!-- 左边1/12为筛选器 -->
+        <div class="col-sm-2">
+            <form action="#" method="GET" role="form" style="font-size:14px">
+                <!-- 时间筛选器 -->
+                {% csrf_token %}
+
+                <!-- 时间段筛选器 -->
+                <div class='mb-5'>
+                    <p class="text-info" style="font-size:20px"><strong>时间筛选:</strong></p>
+
+                    <div class="form-group">
+                        <label for="datetimepicker7">开始时间：</label>
+                        <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker7"/>
+                            <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="datetimepicker8">结束时间：</label>
+                        <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker8"/>
+                            <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 科目字段 -->
+                <div class="mb-5">
+                    <p class="text-info" style="font-size:20px"><strong>科目筛选:</strong></p>
+
+                    <div class="form-group ">
+                        {{ form.trading_FLAT.errors }}
+                        {{ form.trading_FLAT.label_tag }}
+                        {{ form.trading_FLAT }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.trading_SLAT.errors }}
+                        {{ form.trading_SLAT.label_tag }}
+                        {{ form.trading_SLAT }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.trading_TLAT.errors }}
+                        {{ form.trading_TLAT.label_tag }}
+                        {{ form.trading_TLAT }}
+                    </div>
+                </div>
+
+                <!-- 筛选结果提交按钮 -->
+                <div class="row mb-2">
+                    <div class="form-group col  text-center">
+                        <button type="submit" class="btn btn-outline-primary">查询</button>  
+                    </div>
+                    
+                    <div class="form-group col  text-center">
+                        <button type="reset" class="btn btn-outline-warning">重置</button>  
+                    </div> 
+                </div>  
+            </form>
+        </div>
+
+        <!-- 右边10/12为筛选结果展示页面 -->
+        <div class="col-sm-10">
+            <!-- 展示汇总的查询结果 -->           
+            <div>
+            </div>
+
+            <!-- 展示详细的查询结果 -->
+            <div class="table-responsive-sm">
+                <table class="table table-hover text-center text-nowrap" >
+                    <!-- 表头 -->
+                    <thead class="thead-light"> 
+                        <tr>
+                            <th>交易日期</th>
+                            <!-- <th>周</th> -->
+                            <!-- <th>所属期间</th> -->
+                            <th>一级科目</th>
+                            <th>二级科目</th>
+                            <th>三级科目</th>
+                            <th>交易商家</th>
+                            <th>账户</th>
+                            <th>金额(元)</th>
+                            <th>摘要</th>
+                            <!-- <th>记录时间</th> -->
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+
+                    <!-- 表体 -->
+                    <tbody style="font-size:14px">
+                        {% for rm in record_moneys %}
+                            <tr>
+                                <td>{{ rm.trading_date }}</td>
+                                <!-- <td>{{ rm.trading_week }}</td> -->
+                                <!-- <td>{{ rm.trading_period }}</td> -->
+                                <td>{{ rm.trading_FLAT }}</td>
+                                <td>{{ rm.trading_SLAT }}</td>
+                                <td>{{ rm.trading_TLAT }}</td>
+                                <td>{{ rm.trader }}</td>
+                                <td>{{ rm.account }}</td>
+                                <td class="text-right">{{ rm.amount }}</td>
+                                <td class="text-left">{{ rm.summary}} </td>
+                                <!-- <td>{{ rm.record_time }}</td> -->
+                                <th>
+                                    <a type="button" herf="#">删除</a>
+                                    <a type="button" herf="#">编辑</a>
+                                </th>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td class="text-left" colspan="8">
+                                    <!--单元格合并，colspan="8"意思是第一个单元格的长度改变成8个单元格的长度，
+                                        也就是把第一个单元格长度变长八倍，第二个单元格的<td></td>删除。-->
+                                    尚未添加任何记录。
+                                </td> 
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    
+    <!-- 创建一个分割条 -->
+    <div class="container-fluid" style="height:30px" ></div>
+
+    <!-- 通过Ajax异步获取表单下拉框选项数据 -->
+    <script>
+        // 获取一级科目数据
+        //$.get('/RecordMoney/Ajax/LoadFLAT/',function(data){
+        //    for(var i=0, len=data.trading_FLAT.length; i<len ;i++){
+        //        $new = $("<option value="+data.trading_FLAT[i][0]+">"+data.trading_FLAT[i][1]+"</option>");
+        //        $("#id_trading_FLAT").append( $new );
+        //    }
+        //});
+    
+        // 一级科目的数据改变以后
+        $("#id_trading_FLAT").change(function(){    
+            // 清空二级科目、三级科目的数据
+            $("#id_trading_SLAT").empty().append('<option value="">---请选择---</option>');
+            $("#id_trading_TLAT").empty().append('<option value="">---请选择---</option>');
+            $.ajax({
+                url: '/RecordMoney/Ajax/LoadSLAT/',
+                type: 'GET',
+                data: {'FLAT_id': $(this).val()}
+            }).done(function(data){
+                for(var i = 0, len = data.trading_SLAT.length; i<len ;i++){
+                    $new = $("<option value="+data.trading_SLAT[i][0]+">"+data.trading_SLAT[i][1]+"</option>");
+                    $("#id_trading_SLAT").append( $new );
+                }
+            });
+        });
+
+        // 二级科目的数据改变以后
+        $("#id_trading_SLAT").change(function(){    
+            // 清空三级科目的数据
+            $("#id_trading_TLAT").empty().append('<option value="">---请选择---</option>');
+            $.ajax({
+                url: '/RecordMoney/Ajax/LoadTLAT/',
+                type: 'GET',
+                data: {'SLAT_id': $(this).val()}
+            }).done(function(data){
+                for(var i = 0,len = data.trading_TLAT.length; i<len ;i++){
+                    $new = $("<option value="+data.trading_TLAT[i][0]+">"+data.trading_TLAT[i][1]+"</option>");
+                    $("#id_trading_TLAT").append( $new );
+                }
+            });
+        });
+        
+        //daterangepicker
+        $('input[name="daterange"]').daterangepicker();
+    </script>
+
+    <!-- 时间筛选器设置 -->
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker7').datetimepicker({
+                format: 'L',
+            });
+
+            $('#datetimepicker8').datetimepicker({
+                format: 'L',
+                useCurrent: false,
+            });
+
+            $("#datetimepicker7").on("change.datetimepicker", function (e) {
+                $('#datetimepicker8').datetimepicker('minDate', e.date);
+            });
+
+            $("#datetimepicker8").on("change.datetimepicker", function (e) {
+                $('#datetimepicker7').datetimepicker('maxDate', e.date);
+            });
+        });
+    </script>
+{% endblock body %}
+
+
+{% block footer %}
+    {% include 'RecordMoney/Footer.html' %}
+{% endblock footer %}

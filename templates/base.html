@@ -11,7 +11,29 @@
               href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" 
               integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
               crossorigin="anonymous">
-    
+        
+        <!-- jQuer需要放在上面才起作用 -->
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script> 
+        
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" 
+                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" 
+                crossorigin="anonymous"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" 
+                integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" 
+                crossorigin="anonymous"></script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+                
+
         <title>
             {% block title %}
                 猎户座工程 | 记录系统
@@ -20,7 +42,7 @@
     </head>
 
     <!-- 配置顶部导航栏 -->
-    <nav class="navbar navbar-expand-sm navbar-static-top navbar-dark bg-secondary shadow">
+    <nav class="navbar navbar-expand-sm navbar-static-top navbar-light shadow">
         <div class="container">
             <!--配置左上角的LOGO--> 
             <a class="navbar-brand text-info" href="{% url 'nsp_HomePage:HomePage' %}">
@@ -38,12 +60,22 @@
             <!--配置动态折叠菜单的内容--> 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'nsp_RecordTime:RecordTime' %}">时间记录<span class="sr-only">(current)</span></a>
+                    <!-- 时间记录菜单 -->
+                    <li class="nav-item active dropdown">
+                        <a class="nav-link dropdown-toggle" href="{% url 'nsp_RecordTime:NewRecord' %}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">时间记录</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                            <a class="dropdown-item" href="{% url 'nsp_RecordTime:NewRecord' %}">新增</a>
+                            <a class="dropdown-item" href="#">查询</a>
+                        </div>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'nsp_RecordMoney:RecordMoney' %}">收支记录</a>
+                    <!-- 收支记录菜单 -->
+                    <li class="nav-item active dropdown">
+                        <a class="nav-link dropdown-toggle" href="{% url 'nsp_RecordMoney:NewRecord' %}" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">收支记录</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                            <a class="dropdown-item" href="{% url 'nsp_RecordMoney:NewRecord' %}">新增</a>
+                            <a class="dropdown-item" href="{% url 'nsp_RecordMoney:Records' %}">查询</a>
+                        </div>
                     </li>
 
                     <li class="nav-item">
@@ -51,8 +83,8 @@
                     </li>
                 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">主数据</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">主数据</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown03">
                             <a class="dropdown-item" href="#">时间类</a>
                             <a class="dropdown-item" href="#">收支类</a>
                             <a class="dropdown-item" href="#">投资类</a>
@@ -60,10 +92,11 @@
                     </li> 
                 </ul>
 
+                <!-- 用户管理菜单 -->
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <span class="nav-link" >你好， user </span>
+                            <span class="nav-link" >你好， {{ user.username }} </span>
                         </li>
 
                         <li class="nav-item">
@@ -84,36 +117,18 @@
     </nav>
 
     <body>
-        <!-- 预留的导航栏 -->
+        <!-- 预留的页眉 -->
         {% block header %}
         {% endblock header %} 
 
 
-        <!-- 预留的具体页面 -->
+        <!-- 预留的页面 -->
         {% block body %}
         {% endblock body %}
 
 
-        <!-- 预留的注脚 -->
+        <!-- 预留的页脚 -->
         {% block footer %}
         {% endblock footer %}
-
-        
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        
-        <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-        <!--
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" 
-                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" 
-                crossorigin="anonymous"></script>
-        -->
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
-                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
-                crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" 
-                integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" 
-                crossorigin="anonymous"></script>
-
     </body>
 </html>

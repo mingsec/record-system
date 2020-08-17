@@ -13,7 +13,7 @@ class NewRecordMoneyForm(forms.Form):
         #default=datetime.date.today(),
         widget=forms.DateInput(
             attrs={'class':'form-control', 'type':'date'},
-            format=('%Y-%m-%d'),
+            format=(r'%Y-%m-%d'),
         ),
     )
 
@@ -87,3 +87,52 @@ class NewRecordMoneyForm(forms.Form):
         queryset=Accounts.objects.all(), 
         empty_label="---请选择---",
     )
+
+
+class FliterRecordsForm(forms.Form):
+    begin_date = forms.DateField(
+        label='开始日期',
+        #default=datetime.date.today(),
+        widget=forms.DateInput(
+            attrs={'class':'form-control', 'type':'date'},
+            #format=(r'%Y-%m-%d'),
+        ),
+    )
+
+    end_date = forms.DateField(
+        label='结束日期',
+        #default=datetime.date.today(),
+        widget=forms.DateInput(
+            attrs={'class':'form-control', 'type':'date'},
+            #format=(r'%Y-%m-%d'),
+        ),
+    )
+
+    trading_FLAT = forms.ModelChoiceField(
+        label='一级科目',
+        widget=forms.Select(
+            attrs={'class':'form-control'},
+        ),
+        queryset=FirstLevelAccountTitles.objects.all(), 
+        empty_label="---请选择---",
+    )
+
+    # 由于下拉框的选项值需要从前端动态加载，所以不能选择 ChoiceField ，
+    # 否则验证无法通过，即 choices 中的 value 与前端提供的不一致
+    trading_SLAT = forms.IntegerField(
+        label='二级科目',
+        widget=forms.Select(
+            attrs={'class':'form-control'},
+            choices=[(0, "---请选择---")]
+        ),
+    )
+
+    # 由于下拉框的选项值需要从前端动态加载，所以不能选择 ChoiceField ，
+    # 否则验证无法通过，即 choices 中的 value 与前端提供的不一致
+    trading_TLAT = forms.IntegerField(
+        label='三级科目', 
+        widget=forms.Select(
+            attrs={'class':'form-control'},
+            choices=[(0, "---请选择---")]
+        ), 
+    ) 

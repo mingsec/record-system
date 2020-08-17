@@ -14,44 +14,63 @@
 
 {% block body%}
     <!-- 创建一个分割条 -->
-    <div class="container-fluid" style="height:30px" ></div>
+    <div class="container-fluid" style="height:10px" ></div>
 
+
+    <!-- 显示最近三条记录 -->
     <div class="container">
-        <p class="text-info" style="font-size:20px"><strong>增加时间记录:</strong></p>
-    </div>
+        <ul class="list-unstyled pt-3 pb-3" style="font-size:14px">
+            {% for rt in record_times %}
+                <li>{{ rt.end_time }}  完成  {{ rt.event }}  事项，耗时  {{ rt.time_duration }}   分钟</li>
+            {% empty %}
+                最近无时间记录
+            {% endfor %}
+        </ul> 
+    </div>    
+
 
     <!-- 提交收支记录数据的表单 -->
     <form action="" method="POST">
-        <div class="container">
-            {% csrf_token %}
+        {% csrf_token %}
 
+        <!-- 表单字段 -->
+        <div class="container p-3 mb-4 shadow bg-light text-dark">
+            <p class="text-info" style="font-size:20px"><strong>增加时间记录:</strong></p>
+            
             <!-- 时间字段 -->
-            <div class="form-row shadow mb-4 bg-light text-dark">
-                <div class="form-group p-2 mb-2  col-md-6">
+            <div class="form-row mb-2">
+                <div class="form-group col-md-4">
                     {{ form.begin_time.errors }}
                     {{ form.begin_time.label_tag }}
                     {{ form.begin_time }}
                 </div>
-                <div class="form-group p-2 mb-2 col-md-6">
+
+                <div class="form-group col-md-4">
                     {{ form.end_time.errors }}
                     {{ form.end_time.label_tag }}
                     {{ form.end_time }}
                 </div>
+
+                <div class="form-group col-md-4">
+                    耗用时长(min)
+                </div>
             </div>
 
             <!-- 类型及项目字段 -->
-            <div class="form-row shadow mb-4  bg-light text-dark">
-                <div class="form-group p-2 mb-2 col-md-4">
+            <div class="form-row mb-2">
+                <div class="form-group col-md-4">
                     {{ form.event_type.errors }}
                     {{ form.event_type.label_tag }}
                     {{ form.event_type }}
                 </div>
-                <div class="form-group p-2 mb-2 col-md-4">
+
+                <div class="form-group col-md-4">
                     {{ form.event.errors }}
                     {{ form.event.label_tag }}
                     {{ form.event }}
                 </div>
-                <div class="form-group p-2 mb-2 col-md-4">
+
+                <div class="form-group col-md-4">
                     {{ form.project.errors }}
                     {{ form.project.label_tag }}
                     {{ form.project }}
@@ -59,15 +78,17 @@
             </div>
 
             <!-- 描述字段 -->
-            <div class="form-row shadow mb-4 bg-light text-dark">
-                <div class="form-group p-2 mb-2 col">
+            <div class="form-row">
+                <div class="form-group col">
                     {{ form.event_description.errors }}
                     {{ form.event_description.label_tag }}
                     {{ form.event_description }}
                 </div> 
             </div>
+        </div>
 
-            <!-- 按钮组 -->
+        <!-- 按钮组 -->
+        <div class="container">
             <div class="form-row">
                 <div class="form-group col text-center">
                     <button type="submit" class="btn btn-outline-primary"><b>保存</b></button>
@@ -83,11 +104,12 @@
                     </a>
                 </div>
             </div>
-        </div>        
+        </div>
+
     </form>  
 
     <!-- 创建一个分割条 -->
-    <div class="container-fluid" style="height:30px" ></div>
+    <div class="container-fluid" style="height:100px" ></div>
 
     <script>
         // 获取活动的大类选项

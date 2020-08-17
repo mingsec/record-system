@@ -14,25 +14,38 @@
 
 {% block body %}
     <!-- 创建一个分割条 -->
-    <div class="container-fluid" style="height:30px" ></div>
+    <div class="container-fluid" style="height:10px" ></div>
 
+
+    <!-- 显示最近三条记录 -->
     <div class="container">
-        <p class="text-info" style="font-size:20px"><strong>增加收支记录:</strong></p>
+        <ul class="list-unstyled pt-3 pb-3 " style="font-size:14px">
+            {% for rm in record_moneys %}
+                <li>{{ rm.trading_date }}  通过  {{ rm.account }}  支付  {{ rm.trading_TLAT }}  费用 {{ rm.amount }} 元</li>
+            {% empty %}
+                最近无支出记录
+            {% endfor %}
+        </ul> 
     </div>
-
+    
+    
     <!-- 提交收支记录数据的表单 -->
     <form action="" method="POST">
-        <div class="container">
-            {% csrf_token %}
+        {% csrf_token %}
+        
+        <!-- 表单字段 -->
+        <div class="container p-3 mb-4 shadow bg-light text-dark">
+            <p class="text-info" style="font-size:20px"><strong>增加收支记录:</strong></p>
 
-            <!-- 时间字段 -->
-            <div class="form-row shadow mb-4 bg-light text-dark">
-                <div class="form-group p-2 mb-2  col-md-6">
+            <!-- 期间字段 -->
+            <div class="form-row mb-2">
+                <div class="form-group col-md-6">
                     {{ form.trading_date.errors }}
                     {{ form.trading_date.label_tag }}
                     {{ form.trading_date }}
                 </div>
-                <div class="form-group p-2 mb-2 col-md-6">
+
+                <div class="form-group col-md-6">
                     {{ form.trading_period.errors }}
                     {{ form.trading_period.label_tag }}
                     {{ form.trading_period }}
@@ -40,18 +53,20 @@
             </div>
 
             <!-- 科目字段 -->
-            <div class="form-row shadow mb-4  bg-light text-dark">
-                <div class="form-group p-2 mb-2 col-md-4">
+            <div class="form-row mb-2">
+                <div class="form-group col-md-4">
                     {{ form.trading_FLAT.errors }}
                     {{ form.trading_FLAT.label_tag }}
                     {{ form.trading_FLAT }}
                 </div>
-                <div class="form-group p-2 mb-2 col-md-4">
+
+                <div class="form-group col-md-4">
                     {{ form.trading_SLAT.errors }}
                     {{ form.trading_SLAT.label_tag }}
                     {{ form.trading_SLAT }}
                 </div>
-                <div class="form-group p-2 mb-2 col-md-4">
+
+                <div class="form-group col-md-4">
                     {{ form.trading_TLAT.errors }}
                     {{ form.trading_TLAT.label_tag }}
                     {{ form.trading_TLAT }}
@@ -59,18 +74,20 @@
             </div>
 
             <!-- 账户字段 -->
-            <div class="form-row shadow mb-4 bg-light text-dark">
-                <div class="form-group p-2 mb-2 col-md-6">
+            <div class="form-row mb-2">
+                <div class="form-group col-md-6">
                     {{ form.trader.errors }}
                     {{ form.trader.label_tag }}
                     {{ form.trader }}
                 </div>
-                <div class="form-group p-2 mb-2 col-md-3">
+
+                <div class="form-group col-md-3">
                     {{ form.account.errors }}
                     {{ form.account.label_tag }}
                     {{ form.account }}
                 </div>
-                <div class="form-group p-2 mb-2 col-md-3">
+
+                <div class="form-group col-md-3">
                     {{ form.amount.errors }}
                     {{ form.amount.label_tag }}
                     {{ form.amount }}
@@ -78,15 +95,17 @@
             </div>
 
             <!-- 摘要字段 -->
-            <div class="form-row shadow mb-4 bg-light text-dark">
-                <div class="form-group p-2 mb-2 col">
+            <div class="form-row">
+                <div class="form-group col">
                     {{ form.summary.errors }}
                     {{ form.summary.label_tag }}
                     {{ form.summary }}
                 </div> 
-            </div>
+            </div>    
+        </div> 
 
-            <!-- 按钮组 -->
+        <!-- 按钮组 -->
+        <div class="container">
             <div class="form-row">
                 <div class="form-group col text-center">
                     <button type="submit" class="btn btn-outline-primary"><b>保存</b></button>
@@ -97,12 +116,12 @@
                 </div>
 
                 <div class="form-group col text-center">
-                    <a href="{% url 'nsp_RecordMoney:RecordMoney' %}">
+                    <a href="{% url 'nsp_HomePage:HomePage' %}">
                         <button type="button" class="btn btn-outline-info"><b>取消</b></button>
                     </a>
                 </div>
             </div>
-        </div>        
+        </div>       
     </form>     
     
     <!-- 创建一个分割条 -->

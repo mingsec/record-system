@@ -1,19 +1,28 @@
-# -*- encoding: utf-8 -*-
-
-
 # 在下方引入需要的库
 from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from sqlalchemy import create_engine
 import datetime
 import json
-import pandas
 
 from .models import FirstLevelAccountTitles, SecondLevelAccountTitles, ThirdLevelAccountTitles, Accounts, RecordMoney
-from .forms import NewRecordMoneyForm
+from .forms import NewRecordMoneyForm, FliterRecordsForm
 
 
 # 请在下方创建视图 
+def ajax_load_FLAT(request):
+    """获取一级科目的选项数据"""
+
+    FLAT = FirstLevelAccountTitles.objects.all()
+
+    res = []
+    for item in FLAT:
+        res.append([item.id, item.first_level_account_titles])
+
+    print(res)
+    
+    return JsonResponse({'trading_FLAT':res})
+
+
 def ajax_load_SLAT(request):
     """获取二级科目的选项数据"""
     FLAT_id = request.GET.get('FLAT_id')
@@ -39,6 +48,7 @@ def ajax_load_TLAT(request):
 
 def index(request):
     """收支记录的首页,根据选择的时间范围筛选记录进行展示"""
+
     record_moneys = RecordMoney.objects.filter().order_by("-trading_date", "-record_time")[:10]
     time_filter_label = "最近10条收支记录如下："
 
@@ -81,6 +91,8 @@ def index(request):
 def new_record(request):
     """保存新交易的时间及详细描述等信息"""
 
+    record_moneys = RecordMoney.objects.filter().order_by("-trading_date", "-record_time")[:3]
+
     new_recordmoney = RecordMoney()
 
     # 如果是一个POST的请求，则对表单数据进行处理
@@ -121,22 +133,17 @@ def new_record(request):
     else:
         form = NewRecordMoneyForm()
 
-    return render(request, 'RecordMoney/NewRecord.html', {'form': form})
+    return render(request, 'RecordMoney/NewRecord.html', {'form': form, 'record_moneys':record_moneys})
 
-def data_visual(request):
-    """以可视化的方式查看收支记录数据"""
-        
-    # 创建数据库连接引擎
-    # 数据库类型://用户名:口令@机器地址:端口号/数据库名
-    engine = create_engine('postgresql://postgres:330715@localhost:5432/record-system')
 
-    # 标准sql查询语句，此处为测试返回数据库app_RecordMoney_recordmoney表的数据条目，之后可以用python处理字符串的方式动态扩展
-    sql = 'Select count(*) from public."app_RecordMoney_recordmoney"'
+def records(request):
+    """收支记录的查询页面,根据筛选器的筛选结果展示记录"""
 
-    # 将sql语句结果读取至Pandas Dataframe
-    df = pandas.read_sql_query(sql, engine)
+    if request.method == 'POST':
+        pass
+    else:
+        form = FliterRecordsForm() 
+    
+    record_moneys = RecordMoney.objects.filter().order_by("-trading_date", "-record_time")[:10]
 
-    # 设置上下文菜单
-    context = {'data':df}
-
-    return render(request, 'RecordMoney/Display.html', context)
+    return render(request, 'RecordMoney/Records.html', {'record_moneys':record_moneys, 'form': form})

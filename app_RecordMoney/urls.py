@@ -17,9 +17,10 @@ from . import views
 app_name='nsp_RecordMoney'
 
 urlpatterns = [
-    path('Index/', views.index, name='RecordMoney'),
+    #path('Index/', views.index, name='RecordMoney'),
     path('NewRecord/', views.new_record, name='NewRecord'),
-    path('DataVisual/', views.data_visual, name='DataVisual'),
+    path('Records/', views.records, name='Records'),
+    path('Ajax/LoadFLAT/', views.ajax_load_FLAT, name='AjaxLoadFLAT'),
     path('Ajax/LoadSLAT/', views.ajax_load_SLAT, name='AjaxLoadSLAT'),
     path('Ajax/LoadTLAT/', views.ajax_load_TLAT, name='AjaxLoadTLAT'),
 ]
