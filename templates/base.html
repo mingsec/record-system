@@ -37,7 +37,7 @@
     </head>
 
     <!-- 配置顶部导航栏 -->
-    <nav class="navbar justify-content-center navbar-expand-sm static-top navbar-light shadow">
+    <nav class="navbar navbar-expand-sm sticky-top navbar-light bg-light shadow">
         <div class="container">
             <!--配置左上角的LOGO--> 
             <a class="navbar-brand text-info" href="{% url 'nsp_HomePage:HomePage' %}">
@@ -58,18 +58,18 @@
                     <!-- 时间记录菜单 -->
                     <li class="nav-item active dropdown">
                         <a class="nav-link dropdown-toggle" href="{% url 'nsp_RecordTime:NewRecord' %}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">时间记录</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <a class="dropdown-item" href="{% url 'nsp_RecordTime:NewRecord' %}">新增</a>
-                            <a class="dropdown-item" href="{% url 'nsp_RecordTime:Records' %}">查询</a>
+                        <div class="dropdown-menu bg-light" aria-labelledby="dropdown01">
+                            <a class="dropdown-item bg-light" href="{% url 'nsp_RecordTime:NewRecord' %}">新增</a>
+                            <a class="dropdown-item bg-light" href="{% url 'nsp_RecordTime:Records' %}">查询</a>
                         </div>
                     </li>
 
                     <!-- 收支记录菜单 -->
                     <li class="nav-item active dropdown">
                         <a class="nav-link dropdown-toggle" href="{% url 'nsp_RecordMoney:NewRecord' %}" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">收支记录</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown02">
-                            <a class="dropdown-item" href="{% url 'nsp_RecordMoney:NewRecord' %}">新增</a>
-                            <a class="dropdown-item" href="{% url 'nsp_RecordMoney:Records' %}">查询</a>
+                        <div class="dropdown-menu bg-light" aria-labelledby="dropdown02">
+                            <a class="dropdown-item bg-light" href="{% url 'nsp_RecordMoney:NewRecord' %}">新增</a>
+                            <a class="dropdown-item bg-light" href="{% url 'nsp_RecordMoney:Records' %}">查询</a>
                         </div>
                     </li>
 
@@ -79,10 +79,10 @@
                 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">主数据</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown03">
-                            <a class="dropdown-item" href="#">时间类</a>
-                            <a class="dropdown-item" href="#">收支类</a>
-                            <a class="dropdown-item" href="#">投资类</a>
+                        <div class="dropdown-menu bg-light" aria-labelledby="dropdown03">
+                            <a class="dropdown-item bg-light" href="#">时间类</a>
+                            <a class="dropdown-item bg-light" href="#">收支类</a>
+                            <a class="dropdown-item bg-light" href="#">投资类</a>
                         </div>
                     </li> 
                 </ul>

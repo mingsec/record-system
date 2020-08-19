@@ -13,7 +13,7 @@
 
 {% block body %}
     <!-- 创建一个分割条 -->
-    <div class="container-fluid" style="height:30px" ></div>
+    <div class="container-fluid" style="height:50px" ></div>
 
     <!-- 整个页面划分为2个部分，左边2/12为筛选器，右边10/12为筛选结果 -->
     <div class="container-fluid row">
@@ -153,7 +153,7 @@
         // 活动类型的数据改变以后
         $("#id_event_type").change(function(){    
             // 清空活动的明细类型数据
-            $("#id_event").empty().append('<option value="">---请选择---</option>');
+            $("#id_event").empty().append('<option value=0>---请选择---</option>');
             $.ajax({
                 url: '/RecordTime/Ajax/LoadEvent/',
                 type: 'GET',
