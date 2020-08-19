@@ -5,7 +5,7 @@ import datetime
 import json
 
 from .models import FirstLevelAccountTitles, SecondLevelAccountTitles, ThirdLevelAccountTitles, Accounts, RecordMoney
-from .forms import NewRecordMoneyForm, FliterRecordsForm
+from .forms import NewRecordMoneyForm, FliteRecordsForm
 
 
 # 请在下方创建视图 
@@ -18,13 +18,11 @@ def ajax_load_FLAT(request):
     for item in FLAT:
         res.append([item.id, item.first_level_account_titles])
 
-    print(res)
-    
     return JsonResponse({'trading_FLAT':res})
-
 
 def ajax_load_SLAT(request):
     """获取二级科目的选项数据"""
+
     FLAT_id = request.GET.get('FLAT_id')
 
     SLAT = SecondLevelAccountTitles.objects.filter(first_level_account_titles_id=FLAT_id).all()
@@ -37,6 +35,7 @@ def ajax_load_SLAT(request):
 
 def ajax_load_TLAT(request):
     """获取三级科目的选项数据"""
+
     SLAT_id = request.GET.get('SLAT_id')
     TLAT = ThirdLevelAccountTitles.objects.filter(second_level_account_titles_id=SLAT_id).all()
 
@@ -99,6 +98,7 @@ def new_record(request):
     if request.method == 'POST':
         # 创建一个 NewRecordTimeForm 的 form 类实体，并用 request 中的表单数据初始化它:
         form = NewRecordMoneyForm(request.POST)
+
         # 检查数据是否有效，如果有效则进行后续处理
         if form.is_valid():
             # 表单中的数据存储在 form.cleaned_data 字典中，通过读取字典中键的值获取表单中的数据，用于查找数据库记录
@@ -135,15 +135,61 @@ def new_record(request):
 
     return render(request, 'RecordMoney/NewRecord.html', {'form': form, 'record_moneys':record_moneys})
 
-
 def records(request):
     """收支记录的查询页面,根据筛选器的筛选结果展示记录"""
 
-    if request.method == 'POST':
-        pass
-    else:
-        form = FliterRecordsForm() 
-    
-    record_moneys = RecordMoney.objects.filter().order_by("-trading_date", "-record_time")[:10]
+    seach_dic = {}
+    record_moneys = []
 
-    return render(request, 'RecordMoney/Records.html', {'record_moneys':record_moneys, 'form': form})
+    # 如果是一个POST的请求，则对表单数据进行处理
+    if request.method == 'POST':
+        # 创建一个 NewRecordTimeForm 的 form 类实体，并用 request 中的表单数据初始化它:
+        form = FliteRecordsForm(request.POST)
+
+        # 检查数据是否有效，如果有效则进行后续处理
+        if form.is_valid():
+            # 表单中的数据存储在 form.cleaned_data 字典中，通过读取字典中键的值获取表单中的数据，用于查找数据库记录
+            begin_date = form.cleaned_data['begin_date']
+            end_date = form.cleaned_data['end_date']
+            trading_FLAT = form.cleaned_data['trading_FLAT']
+            trading_SLAT = form.cleaned_data['trading_SLAT']
+            trading_TLAT = form.cleaned_data['trading_TLAT']
+            account = form.cleaned_data['account']
+
+            ''' 配置筛选条件 '''
+            # 配置时间筛选条件
+            # 如果开始日期未空，则设置为今天
+            if begin_date == None:
+                begin_date = datetime.date.today()
+            # 如果结束日期未空，则设置为今天
+            if end_date == None:
+                end_date = datetime.date.today()           
+            # 按日期大小排序
+            if begin_date > end_date:
+                mid = end_date
+                end_date = begin_date
+                begin_date = mid
+            seach_dic['trading_date__range'] = (begin_date, end_date)
+
+            # 配置账户筛选条件
+            if account:
+                seach_dic['account'] = account
+
+            # 配置一级科目筛选条件
+            if trading_FLAT:
+                seach_dic['trading_FLAT'] = trading_FLAT
+            # 配置二级科目筛选条件
+            if trading_SLAT > 0 :
+                seach_dic['trading_SLAT'] = trading_SLAT
+            # 配置三级科目筛选条件
+            if trading_TLAT > 0 :
+                seach_dic['trading_TLAT'] = trading_TLAT
+        
+        # 查询记录        
+        record_moneys = RecordMoney.objects.filter(**seach_dic).order_by("-trading_date", "-record_time")
+    else:
+        form = FliteRecordsForm() 
+    
+    context = {'record_moneys':record_moneys, 'form':form}
+
+    return render(request, 'RecordMoney/Records.html', context)

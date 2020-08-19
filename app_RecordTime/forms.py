@@ -61,3 +61,52 @@ class NewRecordTimeForm(forms.Form):
         ),
         max_length = 255
     )
+
+
+class FliteRecordsForm(forms.Form):
+    begin_date = forms.DateField(
+        required=False,
+        label='开始日期',
+        widget=forms. DateInput(
+            attrs={'class':'form-control', 'type':'date'}
+        ),
+    )
+
+    end_date = forms.DateField(
+        required=False,
+        label='结束日期',
+        widget=forms.DateInput(
+            attrs={'class':'form-control', 'type':'date'}
+        ),
+    )
+    
+    event_type = forms.ModelChoiceField(
+        required=False,
+        label='请选择活动类型', 
+        widget=forms.Select(
+            attrs={'class':'form-control'},
+        ),
+        queryset=EventTypes.objects.all(), 
+        empty_label="---请选择---",
+    )
+    
+    # 由于下拉框的选项值需要从前端动态加载，所以不能选择 ChoiceField ，
+    # 否则验证无法通过，即 choices 中的 value 与前端提供的不一致
+    event = forms.IntegerField(
+        required=False,
+        label='请选择具体活动', 
+        widget=forms.Select(
+            attrs={'class':'form-control'}, 
+            choices=[(0,"---请选择---")],
+        ),
+    )
+
+    project = forms.ModelChoiceField(
+        required=False,
+        label='请选择所属项目', 
+        widget=forms.Select(
+            attrs={'class':'form-control'}
+        ),
+        queryset=Projects.objects.all(), 
+        empty_label="---请选择---",
+    )

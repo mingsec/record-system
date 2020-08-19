@@ -3,7 +3,7 @@
 
 # 在下方引入需要的库
 from django import forms
-from .models import Accounts, FirstLevelAccountTitles
+from .models import Accounts, FirstLevelAccountTitles, SecondLevelAccountTitles, ThirdLevelAccountTitles
 import datetime
 
 
@@ -13,7 +13,6 @@ class NewRecordMoneyForm(forms.Form):
         #default=datetime.date.today(),
         widget=forms.DateInput(
             attrs={'class':'form-control', 'type':'date'},
-            format=(r'%Y-%m-%d'),
         ),
     )
 
@@ -89,37 +88,37 @@ class NewRecordMoneyForm(forms.Form):
     )
 
 
-class FliterRecordsForm(forms.Form):
+class FliteRecordsForm(forms.Form):
     begin_date = forms.DateField(
+        required=False,
         label='开始日期',
-        #default=datetime.date.today(),
-        widget=forms.DateInput(
-            attrs={'class':'form-control', 'type':'date'},
-            #format=(r'%Y-%m-%d'),
+        widget=forms. DateInput(
+            attrs={'class':'form-control', 'type':'date'}
         ),
     )
 
     end_date = forms.DateField(
+        required=False,
         label='结束日期',
-        #default=datetime.date.today(),
         widget=forms.DateInput(
-            attrs={'class':'form-control', 'type':'date'},
-            #format=(r'%Y-%m-%d'),
+            attrs={'class':'form-control', 'type':'date'}
         ),
     )
-
+    
     trading_FLAT = forms.ModelChoiceField(
+        required=False,
         label='一级科目',
         widget=forms.Select(
-            attrs={'class':'form-control'},
+            attrs={'class':'form-control'}
         ),
         queryset=FirstLevelAccountTitles.objects.all(), 
         empty_label="---请选择---",
     )
-
+    
     # 由于下拉框的选项值需要从前端动态加载，所以不能选择 ChoiceField ，
     # 否则验证无法通过，即 choices 中的 value 与前端提供的不一致
     trading_SLAT = forms.IntegerField(
+        required=False,
         label='二级科目',
         widget=forms.Select(
             attrs={'class':'form-control'},
@@ -130,9 +129,20 @@ class FliterRecordsForm(forms.Form):
     # 由于下拉框的选项值需要从前端动态加载，所以不能选择 ChoiceField ，
     # 否则验证无法通过，即 choices 中的 value 与前端提供的不一致
     trading_TLAT = forms.IntegerField(
+        required=False,
         label='三级科目', 
         widget=forms.Select(
             attrs={'class':'form-control'},
             choices=[(0, "---请选择---")]
         ), 
-    ) 
+    )
+    
+    account = forms.ModelChoiceField(
+        required=False,
+        label = '交易账户',
+        widget=forms.Select(
+            attrs={'class':'form-control'}
+        ),
+        queryset=Accounts.objects.all(), 
+        empty_label="---请选择---",
+    )

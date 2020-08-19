@@ -7,5 +7,6 @@ app_name='nsp_RecordTime'
 urlpatterns = [
     path('Index', views.index, name='RecordTime'),
     path('NewRecord/', views.NewRecord, name='NewRecord'),
+    path('Records/', views.records, name='Records'),
     path('Ajax/LoadEvent/', views.ajax_load_event, name='AjaxLoadEvent'),
 ]
