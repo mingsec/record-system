@@ -16,130 +16,131 @@
     <div class="container-fluid" style="height:50px" ></div>
 
     <!-- 整个页面划分为2个部分，左边2/12为筛选器，右边10/12为筛选结果 -->
-    <div class="container-fluid row">
-        
-        <!-- 左边1/12为筛选器 -->
-        <div class="container col-sm-2">
-            <form action="" method="POST" role="form" style="font-size:14px">
-                {% csrf_token %}
-        
-                <!-- 时间段筛选器 -->
-                <div class='mb-5'>
-                    <p class="text-info" style="font-size:20px"><strong>时间筛选:</strong></p>
+    <div class="container-fluid">
+        <div class="row"> 
+            <!-- 左边1/12为筛选器 -->
+            <div class="container col-sm-1">
+                <form action="" method="POST" role="form" style="font-size:14px">
+                    {% csrf_token %}
+            
+                    <!-- 时间段筛选器 -->
+                    <div class='mb-5'>
+                        <p class="text-info" style="font-size:20px"><strong>时间筛选:</strong></p>
 
-                    <div class="form-group">
-                        {{ form.begin_date.errors }}
-                        {{ form.begin_date.label_tag }}
-                        {{ form.begin_date }}
+                        <div class="form-group">
+                            {{ form.begin_date.errors }}
+                            {{ form.begin_date.label_tag }}
+                            {{ form.begin_date }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.end_date.errors }}
+                            {{ form.end_date.label_tag }}
+                            {{ form.end_date }}
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        {{ form.end_date.errors }}
-                        {{ form.end_date.label_tag }}
-                        {{ form.end_date }}
-                    </div>
-                </div>
+                    <!-- 项目字段 -->
+                    <div class="mb-5">
+                        <p class="text-info" style="font-size:20px"><strong>项目筛选:</strong></p>
 
-                <!-- 项目字段 -->
-                <div class="mb-5">
-                    <p class="text-info" style="font-size:20px"><strong>项目筛选:</strong></p>
-
-                    <div class="form-group">
-                        {{ form.project.errors }}
-                        {{ form.project.label_tag }}
-                        {{ form.project }}
-                    </div>
-                </div>
-
-                <!-- 活动类型字段 -->
-                <div class="mb-5">
-                    <p class="text-info" style="font-size:20px"><strong>活动筛选:</strong></p>
-
-                    <div class="form-group">
-                        {{ form.event_type.errors }}
-                        {{ form.event_type.label_tag }}
-                        {{ form.event_type }}
+                        <div class="form-group">
+                            {{ form.project.errors }}
+                            {{ form.project.label_tag }}
+                            {{ form.project }}
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        {{ form.event.errors }}
-                        {{ form.event.label_tag }}
-                        {{ form.event }}
-                    </div>
-                </div>
+                    <!-- 活动类型字段 -->
+                    <div class="mb-5">
+                        <p class="text-info" style="font-size:20px"><strong>活动筛选:</strong></p>
 
-                <!-- 筛选结果提交按钮 -->
-                <div class="row mb-2">
-                    <div class="form-group col text-center">
-                        <button type="submit" class="btn btn-outline-primary">查询</button>  
-                    </div>
-                    
-                    <div class="form-group col text-center">
-                        <button type="reset" class="btn btn-outline-warning">重置</button>  
-                    </div> 
-                </div>  
-            </form>
-        </div>
+                        <div class="form-group">
+                            {{ form.event_type.errors }}
+                            {{ form.event_type.label_tag }}
+                            {{ form.event_type }}
+                        </div>
 
-        <!-- 右边10/12为筛选结果展示页面 -->
-        <div class="col-sm-10">
-            <!-- 展示汇总的查询结果 -->           
-            <div>
+                        <div class="form-group">
+                            {{ form.event.errors }}
+                            {{ form.event.label_tag }}
+                            {{ form.event }}
+                        </div>
+                    </div>
+
+                    <!-- 筛选结果提交按钮 -->
+                    <div class="row mb-2">
+                        <div class="form-group col text-center">
+                            <button type="submit" class="btn btn-outline-primary">查询</button>  
+                        </div>
+                        
+                        <div class="form-group col text-center">
+                            <button type="reset" class="btn btn-outline-warning">重置</button>  
+                        </div> 
+                    </div>  
+                </form>
             </div>
 
-            <!-- 展示详细的查询结果 -->
-            <div class="table-responsive-sm">
-                <table class="table table-hover text-center text-nowrap" >
-                    <!-- 表头 -->
-                    <thead class="thead-light"> 
-                        <tr>
-                            <th>活动日期</th>
-                            <th>周</th>
-                            <th>活动类型</th>
-                            <th>具体活动</th>
-                            <th>所属项目</th>
-                            <th>活动描述</th>
-                            <th>开始时间</th>
-                            <th>结束时间</th>
-                            <th>耗用时长(min)</th>
-                            <!-- <th>记录时间</th> -->
-                            <th>操作</th>
-                        </tr>
-                    </thead>
+            <!-- 右边10/12为筛选结果展示页面 -->
+            <div class="col-sm">
+                <!-- 展示汇总的查询结果 -->           
+                <div>
+                </div>
 
-                    <!-- 表体 -->
-                    <tbody style="font-size:14px">
-                        {% for rt in record_times %}
+                <!-- 展示详细的查询结果 -->
+                <div class="table-responsive-sm">
+                    <table class="table table-hover text-center text-nowrap" >
+                        <!-- 表头 -->
+                        <thead class="thead-light"> 
                             <tr>
-                                <td>{{ rt.event_date }}</td>
-                                <td>{{ rt.event_week }}</td>
-                                <td>{{ rt.event_type }}</td>
-                                <td>{{ rt.event }}</td>
-                                <td>{{ rt.project }}</td>
-                                <td class="text-left">{{ rt.event_description }}</td>
-                                <td>{{ rt.begin_time }}</td>
-                                <td>{{ rt.end_time }}</td>
-                                <td>{{ rt.time_duration}}</td>
-                                <!-- <td>{{ rt.record_time }}</td> -->
-                                <th>
-                                    <a type="button">删除</a>
-                                    <a>编辑</a>
-                                </th>
+                                <th>活动日期</th>
+                                <th>周</th>
+                                <th>活动类型</th>
+                                <th>具体活动</th>
+                                <th>所属项目</th>
+                                <th>活动描述</th>
+                                <th>开始时间</th>
+                                <th>结束时间</th>
+                                <th>耗用时长(min)</th>
+                                <!-- <th>记录时间</th> -->
+                                <th>操作</th>
                             </tr>
-                        {% empty %}
-                            <tr>
-                                <td class="text-left" colspan="8">
-                                    <!--单元格合并，colspan="8"意思是第一个单元格的长度改变成8个单元格的长度，
-                                        也就是把第一个单元格长度变长八倍，第二个单元格的<td></td>删除。-->
-                                    未查到任何记录。
-                                </td> 
-                            </tr>
-                        {% endfor %}
+                        </thead>
 
-                    </tbody>
+                        <!-- 表体 -->
+                        <tbody style="font-size:14px">
+                            {% for rt in record_times %}
+                                <tr>
+                                    <td>{{ rt.event_date }}</td>
+                                    <td>{{ rt.event_week }}</td>
+                                    <td>{{ rt.event_type }}</td>
+                                    <td>{{ rt.event }}</td>
+                                    <td>{{ rt.project }}</td>
+                                    <td class="text-left">{{ rt.event_description }}</td>
+                                    <td>{{ rt.begin_time }}</td>
+                                    <td>{{ rt.end_time }}</td>
+                                    <td>{{ rt.time_duration}}</td>
+                                    <!-- <td>{{ rt.record_time }}</td> -->
+                                    <th>
+                                        <a type="button">删除</a>
+                                        <a>编辑</a>
+                                    </th>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td class="text-left" colspan="8">
+                                        <!--单元格合并，colspan="8"意思是第一个单元格的长度改变成8个单元格的长度，
+                                            也就是把第一个单元格长度变长八倍，第二个单元格的<td></td>删除。-->
+                                        未查到任何记录。
+                                    </td> 
+                                </tr>
+                            {% endfor %}
 
-                </table>
+                        </tbody>
 
+                    </table>
+
+                </div>
             </div>
         </div>
     </div>
